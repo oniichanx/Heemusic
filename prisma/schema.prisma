@@ -4,44 +4,43 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-3.0.x"]
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model Guild {
-  id          String      @id @default(auto()) @map("_id")
-  guildId     String
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  guildId     String  @unique
   prefix      String
-  stay        Stay?
-  dj          Dj?
+  stays       Stay[]
+  djs         Dj[]
   roles       Role[]
-  botchannel  Botchannel?
-  setup       Setup?
+  botchannels Botchannel[]
+  setups      Setup[]
+  premiums    Premium[]
 }
 
 model Stay {
-  id       String @id @default(auto()) @map("_id")
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   guildId  String
-  textId   String
-  voiceId  String
   guild    Guild  @relation(fields: [guildId], references: [guildId])
+  voiceId  String
 }
 
 model Dj {
-  id       String  @id @default(auto()) @map("_id")
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   guildId  String
-  mode     Boolean
   guild    Guild   @relation(fields: [guildId], references: [guildId])
+  mode     Boolean
 }
 
 model Role {
-  id       String  @id @default(auto()) @map("_id")
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   guildId  String
   roleId   String
   guild    Guild  @relation(fields: [guildId], references: [guildId])
@@ -50,40 +49,36 @@ model Role {
 }
 
 model Playlist {
-  id       String @id @default(auto()) @map("_id")
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   userId   String
-  name     String
   songs    Song[]
-
-  @@unique([userId, name])
 }
 
 model Song {
-  id         String   @id @default(auto()) @map("_id")
-  track      String
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  track    String
+  playlist Playlist @relation(fields: [playlistId], references: [id])
   playlistId String
-  playlist   Playlist @relation(fields: [playlistId], references: [id])
-
-  @@unique([track, playlistId])
 }
 
 model Botchannel {
-  id       String @id @default(auto()) @map("_id")
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   guildId  String
-  textId   String
   guild    Guild  @relation(fields: [guildId], references: [guildId])
+  textId   String
 }
 
 model Setup {
-  id        String @id @default(auto()) @map("_id")
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   guildId   String
-  textId    String
-  messageId String
   guild     Guild  @relation(fields: [guildId], references: [guildId])
+  textId    String
 }
 
 model Premium {
-  id       String @id @default(auto()) @map("_id")
-  userId   String
-  guildId  String
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  guildId   String
+  guild     Guild  @relation(fields: [guildId], references: [guildId])
+  messageId String
 }
