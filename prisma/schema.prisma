@@ -15,47 +15,51 @@ datasource db {
 }
 
 model Guild {
-  guildId    String      @id
-  prefix     String
-  stay       Stay?
-  dj         Dj?
-  roles      Role[]
-  botchannel Botchannel?
-  setup      Setup?
+  id          String      @id @default(auto()) @map("_id")
+  guildId     String
+  prefix      String
+  stay        Stay?
+  dj          Dj?
+  roles       Role[]
+  botchannel  Botchannel?
+  setup       Setup?
 }
 
 model Stay {
-  guildId String @id
-  textId  String
-  voiceId String
-  Guild   Guild  @relation(fields: [guildId], references: [guildId])
+  id       String @id @default(auto()) @map("_id")
+  guildId  String
+  textId   String
+  voiceId  String
+  guild    Guild  @relation(fields: [guildId], references: [guildId])
 }
 
 model Dj {
-  guildId String  @id
-  mode    Boolean
-  Guild   Guild   @relation(fields: [guildId], references: [guildId])
+  id       String  @id @default(auto()) @map("_id")
+  guildId  String
+  mode     Boolean
+  guild    Guild   @relation(fields: [guildId], references: [guildId])
 }
 
 model Role {
-  guildId String
-  roleId  String
-  Guild   Guild  @relation(fields: [guildId], references: [guildId])
+  id       String  @id @default(auto()) @map("_id")
+  guildId  String
+  roleId   String
+  guild    Guild  @relation(fields: [guildId], references: [guildId])
 
   @@unique([guildId, roleId])
 }
 
 model Playlist {
-  id     String @id @default(uuid())
-  userId String
-  name   String
-  songs  Song[]
+  id       String @id @default(auto()) @map("_id")
+  userId   String
+  name     String
+  songs    Song[]
 
   @@unique([userId, name])
 }
 
 model Song {
-  id         String   @id @default(uuid())
+  id         String   @id @default(auto()) @map("_id")
   track      String
   playlistId String
   playlist   Playlist @relation(fields: [playlistId], references: [id])
@@ -64,19 +68,22 @@ model Song {
 }
 
 model Botchannel {
-  guildId String @id
-  textId  String
-  Guild   Guild  @relation(fields: [guildId], references: [guildId])
+  id       String @id @default(auto()) @map("_id")
+  guildId  String
+  textId   String
+  guild    Guild  @relation(fields: [guildId], references: [guildId])
 }
 
 model Setup {
-  guildId   String @id
+  id        String @id @default(auto()) @map("_id")
+  guildId   String
   textId    String
   messageId String
-  Guild     Guild  @relation(fields: [guildId], references: [guildId])
+  guild     Guild  @relation(fields: [guildId], references: [guildId])
 }
 
 model Premium {
-  userId  String @id
-  guildId String
+  id       String @id @default(auto()) @map("_id")
+  userId   String
+  guildId  String
 }
