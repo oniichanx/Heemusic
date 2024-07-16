@@ -12,29 +12,11 @@
 
 # Ignore target folder
 
-/target
-
-/yarn.lock
-
-/.next
-
-/node_modules
-
-/pnpm-lock.yaml
-
-/yarn-error.log
-
-/yarn.lock
-
-/.eslintcache
-
-/package-lock.json
-
-/Lavalink/application.yml
-
 /Lavalink/plugins
+/Lavalink/application.yml
+/Lavalink/Lavalink.jar
 
 /prisma/lavamusic.db
 /prisma/migrations
 
-/src/database/*
+package-lock.json

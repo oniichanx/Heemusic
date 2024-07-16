@@ -22,14 +22,13 @@
   <p align="center">heemusic is a Discord music bot that uses Discord.js, Shoukaku, and TypeScript.
     <br />
     <br />
-    <a href="https://discord.com/api/oauth2/authorize?client_id=875635121770889257&permissions=8&scope=bot%20applications.commands">Invite heemusic</a>
+    <a href="https://discord.com/oauth2/authorize?client_id=875635121770889257&scope=bot+applications.commands&permissions=8">Invite heemusic</a>
     ·
     <a href="https://github.com/oniichanx/heemusic/issues">Report Bug & Request Feature</a>
   </p>
 </p>
 
 ## 🔥 Unique Features
-
 -   Developed using Typescript and Discord.js v14
 -   Advanced Music System
 -   Customizable Prefix
@@ -44,8 +43,7 @@
 
 ## 🎶 Support Sources
 
-🔍 **Default Sources**:
-
+### 🔍 Default Sources
 -   ![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=plastic&logo=youtube&logoColor=white) ([Required Plugin][youtube-source])
 -   ![SoundCloud](https://img.shields.io/badge/SoundCloud-FF3300?style=plastic&logo=soundcloud&logoColor=white)
 -   ![Twitch](https://img.shields.io/badge/Twitch-9146FF?style=plastic&logo=twitch&logoColor=white)
@@ -55,10 +53,8 @@
 -   ![Mixer](https://img.shields.io/badge/Mixer-FFA500?style=plastic&logo=mixer&logoColor=white)
 -   ![http](https://img.shields.io/badge/http-FFA500?style=plastic&logo=http&logoColor=white)
 
-🔌 **Plugin Sources**: `(Require: LavaLink v4.1.x)`
-
+### 🔌 Plugin Sources: `(Require: LavaLink v4.1.x)`
 **Note: You need to install the plugins to use these sources**
-
 -   ![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=plastic&logo=spotify&logoColor=white) ([Required Plugin][LavaSrc])
 -   ![Deezer](https://img.shields.io/badge/Deezer-FF0000?style=plastic&logo=deezer&logoColor=white) ([Required Plugin][LavaSrc])
 -   ![Apple Music](https://img.shields.io/badge/Apple%20Music-000000?style=plastic&logo=apple-music&logoColor=white) ([Required Plugin][LavaSrc])
@@ -72,54 +68,39 @@
 -   ![Soundgasm](https://img.shields.io/badge/Soundgasm-F1672F?style=plastic&logo=soundgasm&logoColor=white) ([Required Plugin][skybot-lavalink-plugin])
 -   ![Text To Speech](https://img.shields.io/badge/Text%20To%20Speech-3080ff?style=plastic&logo=google-translate&logoColor=white) ([Required Plugin][skybot-lavalink-plugin])
 
-[youtube-source]: https://github.com/lavalink-devs/youtube-source
 [LavaSrc]: https://github.com/TopiSenpai/LavaSrc
 [skybot-lavalink-plugin]: https://github.com/DuncteBot/skybot-lavalink-plugin
-
-### To Setup a Lavalink server on Windows, Linux, or Replit, [Click Here.](https://github.com/LucasB25/lavalink-server)
+[youtube-source]: https://github.com/lavalink-devs/youtube-source
+To Setup a Lavalink server on Windows, Linux, or Replit, [Click Here.](https://github.com/LucasB25/lavalink-server)
 
 ### **Need Help with plugins?** Join our [Discord Server]([support-server]) and ask for help in the `#support` channel.
 
 ## 🔧 Requirements
-
 Before starting with the installation, you need to have the following:
-
 -   ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white) [v18.17.1 or higher](https://nodejs.org/en/download/)
 -   ![Lavalink](https://img.shields.io/badge/Lavalink-7289DA?style=for-the-badge&logo=discord&logoColor=white) [v4.0.x or higher](https://github.com/freyacodes/Lavalink)
-
 ### Optional
-
 -   ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white) [Optional](https://www.mongodb.com/try/download/community) (For MongoDB database)
 -   ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white) [Optional](https://www.postgresql.org/download/) (For PostgreSQL database)
-
 -   ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white) [Optional](https://www.docker.com/) (For Docker Installation)
 -   ![Docker-Compose](https://img.shields.io/badge/Docker--Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white) [Optional](https://docs.docker.com/compose/) (For Docker Installation)
 
 ## 🚀 Installation from source
-
 1. Clone the heemusic repository:
-
 ```bash
 git clone https://github.com/oniichanx/heemusic.git
 ```
-
 2. Change to the heemusic directory:
-
 ```bash
 cd heemusic
 ```
-
 3. Install the required packages:
-
 ```bash
 npm i
 ```
-
 4. Set up your environment variables:
-
 Create a `.env` file in the root directory of your project with the following variables:
 or you can use the [.env.example](https://raw.githubusercontent.com/oniichanx/heemusic/main/.env.example) file
-
 ```bash
 TOKEN = "" # Your bot token.
 CLIENT_ID = "" # Your bot's client ID (If this value is left blank, bots cannot be invited using /invite or /about commands.).
@@ -145,40 +126,34 @@ LOG_CHANNEL_ID = "" # If you enter this, you will be able to receive the status 
 
 ## Prisma Setup
 
-1. Generate the Prisma client:
+5. Generate the Prisma client:
 
 ```bash
-npm run prisma:push
+npm run db:push
 ```
 
-2. Run the migrations:
+6. Run the migrations (Only if you want to migrate your database)
 
 ```bash
-npm run prisma:migrate
+npm run db:migrate
 ```
 
-5. Run the bot:
+7. Run the bot:
 
+If you are using Windows, click run.bat on Windows explorer.
 ```bash
 npm start
 ```
 
-If you are using Windows, start run.bat.
-if your Prisma client is not generated then follow the below steps [Prisma Setup](#prisma-setup)
+8. Invite the bot to your server:
 
-6. Invite the bot to your server:
-
-Generate an invite link for your bot and invite it to your server using the Discord Developer Portal or using permissions calculator: <https://discordapi.com/permissions.html>
+Generate an invite link for your bot and invite it to your server using the <a href="https://discord.com/developers/applications">Discord Developer Portal</a> or using <a href="https://discordapi.com/permissions.html">Permissions Calculator.</a>
 
 
 ## 🚀 Installation using Docker Compose
-
 This section assumes you have Docker and Docker Compose installed and running correctly.
-
 Download the [docker-compose.yml file](https://raw.githubusercontent.com/oniichanx/heemusic/main/docker-compose.yml) in a seperate folder like heemusic.
-
 Edit docker-compose.yml and make sure to set the following variables:
-
 your .env file should look like this or you can use the [.env.example](https://raw.githubusercontent.com/oniichanx/heemusic/main/.env.example) file
 
 ```yaml

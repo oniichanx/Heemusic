@@ -1,5 +1,4 @@
 import type { ApplicationCommandOption, PermissionResolvable } from "discord.js";
-
 import type heemusic from "./Heemusic.js";
 
 interface CommandDescription {
@@ -54,14 +53,14 @@ export default class Command {
     constructor(client: heemusic, options: CommandOptions) {
         this.client = client;
         this.name = options.name;
-        this.nameLocalizations = options.nameLocalizations || {};
+        this.nameLocalizations = options.nameLocalizations ?? {};
         this.description = {
-            content: options.description?.content || "No description provided",
-            usage: options.description?.usage || "No usage provided",
-            examples: options.description?.examples || ["No examples provided"],
+            content: options.description?.content ?? "No description provided",
+            usage: options.description?.usage ?? "No usage provided",
+            examples: options.description?.examples ?? ["No examples provided"],
         };
-        this.descriptionLocalizations = options.descriptionLocalizations || {};
-        this.aliases = options.aliases || [];
+        this.descriptionLocalizations = options.descriptionLocalizations ?? {};
+        this.aliases = options.aliases ?? [];
         this.cooldown = options.cooldown ?? 3;
         this.args = options.args ?? false;
         this.player = {

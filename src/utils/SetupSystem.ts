@@ -1,16 +1,13 @@
 import { type ColorResolvable, EmbedBuilder, type Message, type TextChannel } from "discord.js";
 import { LoadType } from "shoukaku";
-
 import type { Song } from "../structures/Dispatcher.js";
 import type { Dispatcher, heemusic } from "../structures/index.js";
 import { getButtons } from "./Buttons.js";
 
 function neb(embed: EmbedBuilder, player: Dispatcher, client: heemusic): EmbedBuilder {
     if (!player?.current?.info) return embed;
-
     const iconUrl = client.config.icons[player.current.info.sourceName] || client.user.displayAvatarURL({ extension: "png" });
     const icon = player.current.info.artworkUrl || client.config.links.img;
-
     return embed
         .setAuthor({ name: "เขากำลังดูดไข่ผมม..", iconURL: iconUrl })
         .setDescription(
@@ -22,12 +19,10 @@ function neb(embed: EmbedBuilder, player: Dispatcher, client: heemusic): EmbedBu
         .setColor(client.color.main);
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 async function setupStart(client: heemusic, query: string, player: Dispatcher, message: Message): Promise<void> {
     let m: Message;
     const embed = client.embed();
     const n = client.embed().setColor(client.color.main);
-
     const data = await client.db.getSetup(message.guild.id);
     try {
         if (data) m = await message.channel.messages.fetch({ message: data.messageId, cache: true });
@@ -43,26 +38,17 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                         .send({
                             embeds: [embed.setColor(client.color.red).setDescription("เกิดข้อผิดพลาดขณะค้นหา.")],
                         })
-                        .then((msg) => {
-                            setTimeout(() => {
-                                msg.delete();
-                            }, 5000);
-                        });
+                        .then((msg) => setTimeout(() => msg.delete(), 5000));
                     break;
                 case LoadType.EMPTY:
                     await message.channel
                         .send({
                             embeds: [embed.setColor(client.color.red).setDescription("ขอโทษที่น้าาาแต่มึงให้กูหาเหิ้ยไรเนี่ย.")],
                         })
-                        .then((msg) => {
-                            setTimeout(() => {
-                                msg.delete();
-                            }, 5000);
-                        });
+                        .then((msg) => setTimeout(() => msg.delete(), 5000));
                     break;
                 case LoadType.TRACK: {
                     const track = player.buildTrack(res.data, message.author);
-
                     if (player.queue.length > client.config.maxQueueSize) {
                         await message.channel
                             .send({
@@ -74,11 +60,7 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                         ),
                                 ],
                             })
-                            .then((msg) => {
-                                setTimeout(() => {
-                                    msg.delete();
-                                }, 5000);
-                            });
+                            .then((msg) => setTimeout(() => msg.delete(), 5000));
                         return;
                     }
                     player.queue.push(track);
@@ -91,13 +73,9 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                     .setDescription(`เพิ่ม [${res.data.info.title}](${res.data.info.uri}) ลงในคิวโมกแล้ว.`),
                             ],
                         })
-                        .then((msg) => {
-                            setTimeout(() => {
-                                msg.delete();
-                            }, 5000);
-                        });
+                        .then((msg) => setTimeout(() => msg.delete(), 5000));
                     neb(n, player, client);
-                    if (m) await m.edit({ embeds: [n] }).catch(() => {});
+                    await m.edit({ embeds: [n] }).catch(() => {});
                     break;
                 }
                 case LoadType.PLAYLIST:
@@ -112,11 +90,7 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                         ),
                                 ],
                             })
-                            .then((msg) => {
-                                setTimeout(() => {
-                                    msg.delete();
-                                }, 5000);
-                            });
+                            .then((msg) => setTimeout(() => msg.delete(), 5000));
                         return;
                     }
                     for (const track of res.data.tracks) {
@@ -132,11 +106,7 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                             ),
                                     ],
                                 })
-                                .then((msg) => {
-                                    setTimeout(() => {
-                                        msg.delete();
-                                    }, 5000);
-                                });
+                                .then((msg) => setTimeout(() => msg.delete(), 5000));
                             return;
                         }
                         player.queue.push(pl);
@@ -150,13 +120,9 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                     .setDescription(`เพิ่ม [${res.data.tracks.length}](${res.data.tracks[0].info.uri}) ลงในคิวโมกแล้ว.`),
                             ],
                         })
-                        .then((msg) => {
-                            setTimeout(() => {
-                                msg.delete();
-                            }, 5000);
-                        });
+                        .then((msg) => setTimeout(() => msg.delete(), 5000));
                     neb(n, player, client);
-                    if (m) await m.edit({ embeds: [n] }).catch(() => {});
+                    await m.edit({ embeds: [n] }).catch(() => {});
                     break;
                 case LoadType.SEARCH: {
                     const track = player.buildTrack(res.data[0], message.author);
@@ -171,11 +137,7 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                         ),
                                 ],
                             })
-                            .then((msg) => {
-                                setTimeout(() => {
-                                    msg.delete();
-                                }, 5000);
-                            });
+                            .then((msg) => setTimeout(() => msg.delete(), 5000));
                         return;
                     }
                     player.queue.push(track);
@@ -188,13 +150,9 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
                                     .setDescription(`เพิ่ม [${res.data[0].info.title}](${res.data[0].info.uri}) ลงในคิวโมกแล้ว.`),
                             ],
                         })
-                        .then((msg) => {
-                            setTimeout(() => {
-                                msg.delete();
-                            }, 5000);
-                        });
+                        .then((msg) => setTimeout(() => msg.delete(), 5000));
                     neb(n, player, client);
-                    if (m) await m.edit({ embeds: [n] }).catch(() => {});
+                    await m.edit({ embeds: [n] }).catch(() => {});
                     break;
                 }
             }
@@ -203,6 +161,7 @@ async function setupStart(client: heemusic, query: string, player: Dispatcher, m
         }
     }
 }
+
 async function trackStart(msgId: any, channel: TextChannel, player: Dispatcher, track: Song, client: heemusic): Promise<void> {
     const icon = player.current ? player.current.info.artworkUrl : client.config.links.img;
     let m: Message;
@@ -212,8 +171,7 @@ async function trackStart(msgId: any, channel: TextChannel, player: Dispatcher, 
         client.logger.error(error);
     }
     if (m) {
-        let iconUrl = client.config.icons[player.current.info.sourceName];
-        if (!iconUrl) iconUrl = client.user.displayAvatarURL({ extension: "png" });
+        const iconUrl = client.config.icons[player.current.info.sourceName] || client.user.displayAvatarURL({ extension: "png" });
         const embed = client
             .embed()
             .setAuthor({ name: "เขากำลังดูดไข่ผมม..", iconURL: iconUrl })
@@ -228,16 +186,13 @@ async function trackStart(msgId: any, channel: TextChannel, player: Dispatcher, 
             .edit({
                 embeds: [embed],
                 components: getButtons(player).map((b) => {
-                    b.components.forEach((c) => {
-                        c.setDisabled(!player?.current);
-                    });
+                    b.components.forEach((c) => c.setDisabled(!player?.current));
                     return b;
                 }),
             })
             .catch(() => {});
     } else {
-        let iconUrl = client.config.icons[player.current.info.sourceName];
-        if (!iconUrl) iconUrl = client.user.displayAvatarURL({ extension: "png" });
+        const iconUrl = client.config.icons[player.current.info.sourceName] || client.user.displayAvatarURL({ extension: "png" });
         const embed = client
             .embed()
             .setColor(client.color.main)
@@ -252,9 +207,7 @@ async function trackStart(msgId: any, channel: TextChannel, player: Dispatcher, 
             .send({
                 embeds: [embed],
                 components: getButtons(player).map((b) => {
-                    b.components.forEach((c) => {
-                        c.setDisabled(!player?.current);
-                    });
+                    b.components.forEach((c) => c.setDisabled(!player?.current));
                     return b;
                 }),
             })
@@ -280,8 +233,7 @@ async function updateSetup(client: heemusic, guild: any): Promise<void> {
     if (m) {
         const player = client.queue.get(guild.id);
         if (player?.current) {
-            let iconUrl = client.config.icons[player.current.info.sourceName];
-            if (!iconUrl) iconUrl = client.user.displayAvatarURL({ extension: "png" });
+            const iconUrl = client.config.icons[player.current.info.sourceName] || client.user.displayAvatarURL({ extension: "png" });
             const embed = client
                 .embed()
                 .setAuthor({ name: "เขากำลังดูดไข่ผมม..", iconURL: iconUrl })
@@ -296,9 +248,7 @@ async function updateSetup(client: heemusic, guild: any): Promise<void> {
                 .edit({
                     embeds: [embed],
                     components: getButtons(player).map((b) => {
-                        b.components.forEach((c) => {
-                            c.setDisabled(!player?.current);
-                        });
+                        b.components.forEach((c) => c.setDisabled(!player?.current));
                         return b;
                     }),
                 })
@@ -317,9 +267,7 @@ async function updateSetup(client: heemusic, guild: any): Promise<void> {
                 .edit({
                     embeds: [embed],
                     components: getButtons(player).map((b) => {
-                        b.components.forEach((c) => {
-                            c.setDisabled(true);
-                        });
+                        b.components.forEach((c) => c.setDisabled(true));
                         return b;
                     }),
                 })
@@ -327,7 +275,6 @@ async function updateSetup(client: heemusic, guild: any): Promise<void> {
         }
     }
 }
-
 async function buttonReply(int: any, args: string, color: ColorResolvable): Promise<void> {
     const embed = new EmbedBuilder();
     let m: Message;
@@ -342,7 +289,6 @@ async function buttonReply(int: any, args: string, color: ColorResolvable): Prom
         }
     }, 2000);
 }
-
 async function oops(channel: TextChannel, args: string): Promise<void> {
     try {
         const embed1 = new EmbedBuilder().setColor("Red").setDescription(`${args}`);

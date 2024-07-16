@@ -1,16 +1,16 @@
 import { Command, type Context, type heemusic } from "../../structures/index.js";
 
-export default class Skipto extends Command {
+export default class Rate extends Command {
     constructor(client: heemusic) {
         super(client, {
-            name: "skipto",
+            name: "rate",
             description: {
-                content: "Skips to a specific song in the queue",
-                examples: ["skipto 3"],
-                usage: "skipto <number>",
+                content: "Change the rate of the song",
+                examples: ["rate 1", "pitch 1.5", "pitch 1,5"],
+                usage: "rate <number>",
             },
-            category: "music",
-            aliases: ["st"],
+            category: "filters",
+            aliases: ["rt"],
             cooldown: 3,
             args: true,
             player: {
@@ -27,9 +27,9 @@ export default class Skipto extends Command {
             slashCommand: true,
             options: [
                 {
-                    name: "number",
-                    description: "The number of the song you want to skip to",
-                    type: 4,
+                    name: "rate",
+                    description: "The number you want to set the rate to (between 0.5 and 5)",
+                    type: 3,
                     required: true,
                 },
             ],
@@ -38,15 +38,27 @@ export default class Skipto extends Command {
 
     public async run(client: heemusic, ctx: Context, args: string[]): Promise<any> {
         const player = client.queue.get(ctx.guild.id);
-        const embed = this.client.embed();
-        if (!player.queue.length || isNaN(Number(args[0])) || Number(args[0]) > player.queue.length || Number(args[0]) < 1) {
+        const rateString = args[0].replace(",", ".");
+        const isValidNumber = /^[0-9]*\.?[0-9]+$/.test(rateString);
+        const rate = parseFloat(rateString);
+        if (!isValidNumber || isNaN(rate) || rate < 0.5 || rate > 5) {
             return await ctx.sendMessage({
-                embeds: [embed.setColor(this.client.color.red).setDescription("Please provide a valid number.")],
+                embeds: [
+                    {
+                        description: "Please provide a valid number between 0.5 and 5.",
+                        color: this.client.color.red,
+                    },
+                ],
             });
         }
-        player.skip(Number(args[0]));
+        player.player.setTimescale({ rate: rate });
         return await ctx.sendMessage({
-            embeds: [embed.setColor(this.client.color.main).setDescription(`Skipped to song number ${args[0]}.`)],
+            embeds: [
+                {
+                    description: `Pitch and speed has been set to ${rate}.`,
+                    color: this.client.color.main,
+                },
+            ],
         });
     }
 }

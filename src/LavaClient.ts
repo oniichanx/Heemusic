@@ -1,5 +1,4 @@
 import { type ClientOptions, GatewayIntentBits } from "discord.js";
-
 import config from "./config.js";
 import heemusic from "./structures/Heemusic.js";
 

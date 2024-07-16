@@ -1,5 +1,4 @@
 import type { Player } from "shoukaku";
-
 import type { Song } from "../../structures/Dispatcher.js";
 import { type Dispatcher, Event, type heemusic } from "../../structures/index.js";
 import { updateSetup } from "../../utils/SetupSystem.js";
@@ -33,7 +32,7 @@ export default class QueueEnd extends Event {
         } else {
             dispatcher.autoplay = false;
         }
-
+        
         await updateSetup(this.client, guild);
         this.client.utils.updateStatus(this.client, guild.id);
     }

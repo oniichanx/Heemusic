@@ -1,21 +1,22 @@
 {
     "name": "heemusic",
-    "version": "4.3.3",
+    "version": "4.4.3",
     "description": "heemusic is a music bot for Discord, written in JavaScript using the Discord.js, Typescript, Shoukaku (Lavalink) library.",
     "main": "dist/index.js",
     "type": "module",
     "scripts": {
-        "start": "npm run build && node dist/index.js",
-        "prisma:push": "npx prisma db push",
-        "prisma:migrate": "npx prisma migrate dev --name init",
+        "start": "npm run clean:no-log && node dist/index.js",
+        "db:push": "npx prisma db push",
+        "db:migrate": "npx prisma migrate dev --name init",
         "build": "tsc --project tsconfig.json",
         "clean": "node ./scripts/clean.js && npm run build",
-        "lint": "biome lint --apply ./src",
-        "format": "biome check --apply ./src"
+        "clean:no-log": "node ./scripts/clean-no-log.js && npm run build",
+        "lint": "biome lint --write ./src",
+        "format": "biome format --write ./src"
     },
     "lint-staged": {
         "*.ts": [
-            "biome check --apply",
+            "biome check --write",
             "biome format --write"
         ]
     },
@@ -40,24 +41,24 @@
     },
     "homepage": "https://github.com/oniichanx/heemusic#readme",
     "devDependencies": {
-        "@biomejs/biome": "^1.8.1",
-        "@types/node": "^20.14.2",
+        "@biomejs/biome": "^1.8.3",
+        "@types/node": "^20.14.10",
         "@types/signale": "^1.4.7",
         "lint-staged": "^15.2.7",
-        "prisma": "^5.15.0",
+        "prisma": "^5.16.2",
         "ts-node": "^10.9.2",
-        "typescript": "^5.4.5"
+        "typescript": "^5.5.3"
     },
     "dependencies": {
-        "@prisma/client": "^5.15.0",
+        "@prisma/client": "^5.16.2",
         "discord.js": "^14.15.3",
         "dotenv": "^16.4.5",
         "node-system-stats": "^1.3.0",
-        "shoukaku": "^4.0.1",
-        "nodemon": "^3.0.3",
+        "shoukaku": "github:shipgirlproject/Shoukaku",
+        "nodemon": "^3.1.4",
         "signale": "^1.4.0",
         "tslib": "^2.6.3",
-        "undici": "^6.19.0"
+        "undici": "^6.19.2"
     },
     "signale": {
         "displayScope": true,

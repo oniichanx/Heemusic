@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/typedef */
 import type { Message, User } from "discord.js";
 import type { Node, Player, Track } from "shoukaku";
-
 import type { heemusic } from "./index.js";
 
 export class Song implements Track {
@@ -76,7 +74,6 @@ export default class Dispatcher {
         this.autoplay = false;
         this.nowPlayingMessage = null;
         this.history = [];
-
         this.player
             .on("start", () => this.client.shoukaku.emit("trackStart", this.player, this.current, this))
             .on("end", () => {
@@ -98,16 +95,12 @@ export default class Dispatcher {
     }
 
     public play(): Promise<void> {
-        if (!(this.exists && (this.queue.length || this.current))) {
-            return;
-        }
+        if (!(this.exists && (this.queue.length || this.current))) return;
         this.current = this.queue.length ? this.queue.shift() : this.queue[0];
         if (this.current) {
-            this.player.playTrack({ track: this.current.encoded });
+            this.player.playTrack({ track: { encoded: this.current.encoded } });
             this.history.push(this.current);
-            if (this.history.length > 100) {
-                this.history.shift();
-            }
+            if (this.history.length > 100) this.history.shift();
         }
     }
 
@@ -199,7 +192,6 @@ export default class Dispatcher {
         if (!resolve?.data && Array.isArray(resolve.data)) {
             return this.destroy();
         }
-
         const metadata = resolve.data as Track[];
         let chosen: Song | null = null;
         const maxAttempts = 10;
@@ -218,7 +210,6 @@ export default class Dispatcher {
             }
             attempts++;
         }
-
         if (chosen) {
             this.queue.push(chosen);
             await this.isPlaying();

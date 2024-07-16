@@ -1,5 +1,4 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-
 import { Command, type Context, type heemusic } from "../../structures/index.js";
 
 export default class About extends Command {
@@ -38,22 +37,18 @@ export default class About extends Command {
             .setURL(
                 `https://discord.com/api/oauth2/authorize?client_id=${client.config.clientId}&permissions=8&scope=bot%20applications.commands`,
             );
-
         const supportButton = new ButtonBuilder()
             .setLabel("Support Server")
             .setStyle(ButtonStyle.Link)
             .setURL("https://media.discordapp.net/attachments/858027691021959168/982975962859851846/-7114398070693093601.mp4");
-
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(inviteButton, supportButton);
-
         const embed = this.client
             .embed()
             .setAuthor({
                 name: "DooHeeMusic",
                 iconURL:"https://cdn.discordapp.com/attachments/721455382177906828/1171111436722913340/IMG_5984.jpg",
             })
-            .setThumbnail("https://cdn.discordapp.com/attachments/721455382177906828/1171111436722913340/IMG_5984.jpg"
-            )
+            .setThumbnail("https://cdn.discordapp.com/attachments/721455382177906828/1171111436722913340/IMG_5984.jpg")
             .setColor(this.client.color.main)
             .addFields(
                 {
@@ -77,7 +72,6 @@ export default class About extends Command {
                     inline: true,
                 },
             );
-
         await ctx.sendMessage({
             content: "",
             embeds: [embed],

@@ -3,8 +3,13 @@ import type { Dispatcher } from "../structures/index.js";
 
 function getButtons(player: Dispatcher): ActionRowBuilder<ButtonBuilder>[] {
     const buttonData = [
-        { customId: "LOOP_BUT", emoji: { id: "1200503382062931998", name: "looper" }, style: ButtonStyle.Secondary },
+        { customId: "REWIND_BUT", emoji: { id: "1200503448777527506", name: "aa_boom_rewind" }, style: ButtonStyle.Secondary },
+        { customId: "LOW_VOL_BUT", emoji: { id: "1200503331261513728", name: "ah_boom_vol_2" }, style: ButtonStyle.Secondary },
+        { customId: "STOP_BUT", emoji: { id: "1200503415101468763", name: "ad_boom_stop" }, style: ButtonStyle.Secondary },
+        { customId: "HIGH_VOL_BUT", emoji: { id: "1200503361473089626", name: "ai_boom_vol_3" }, style: ButtonStyle.Secondary },
+        { customId: "FORWARD_BUT", emoji: { id: "1200503431111135415", name: "ae_boom_play_pause" }, style: ButtonStyle.Secondary },
         { customId: "PREV_BUT", emoji: { id: "1200503448777527506", name: "aa_boom_rewind" }, style: ButtonStyle.Secondary },
+        { customId: "LOOP_BUT", emoji: { id: "1200503382062931998", name: "looper" }, style: ButtonStyle.Secondary },
         {
             customId: "PAUSE_BUT",
             emoji: player?.paused
@@ -14,27 +19,23 @@ function getButtons(player: Dispatcher): ActionRowBuilder<ButtonBuilder>[] {
         },
         { customId: "SKIP_BUT", emoji: { id: "1200503431111135415", name: "ae_boom_play_pause" }, style: ButtonStyle.Secondary },
         { customId: "SHUFFLE_BUT", emoji: { id: "1200470070955081929", name: "shuffle" }, style: ButtonStyle.Secondary },
-        { customId: "FORWARD_BUT", emoji: { id: "1200503431111135415", name: "ae_boom_play_pause" }, style: ButtonStyle.Secondary },
-        { customId: "LOW_VOL_BUT", emoji: { id: "1200503331261513728", name: "ah_boom_vol_2" }, style: ButtonStyle.Secondary },
-        { customId: "STOP_BUT", emoji: { id: "1200503415101468763", name: "ad_boom_stop" }, style: ButtonStyle.Secondary },
-        { customId: "HIGH_VOL_BUT", emoji: { id: "1200503361473089626", name: "ai_boom_vol_3" }, style: ButtonStyle.Secondary },
-        { customId: "REWIND_BUT", emoji: { id: "1200503448777527506", name: "aa_boom_rewind" }, style: ButtonStyle.Secondary },
     ];
 
-    const rows = [];
-
-    for (let i = 0; i < 2; i++) {
-        const rowButtons = [];
-        for (let j = 0; j < 5; j++) {
-            const index = i * 5 + j;
-            if (index >= buttonData.length) break;
-            const { customId, emoji, style } = buttonData[index];
-            const button = new ButtonBuilder().setCustomId(customId).setEmoji(emoji).setStyle(style).setDisabled(false);
-            rowButtons.push(button);
+    // Using reduce to organize buttons into rows
+    const rows = buttonData.reduce((accumulator, { customId, emoji, style }, index) => {
+        // Check if index is divisible by 5 to start a new row
+        if (index % 5 === 0) {
+            accumulator.push(new ActionRowBuilder<ButtonBuilder>());
         }
-        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(...rowButtons);
-        rows.push(row);
-    }
+
+        // Create a new button builder with the emoji ID
+        const button = new ButtonBuilder().setCustomId(customId).setEmoji(emoji).setStyle(style);
+
+        // Add the button to the last action row
+        accumulator[accumulator.length - 1].addComponents(button);
+
+        return accumulator;
+    }, [] as ActionRowBuilder<ButtonBuilder>[]);
 
     return rows;
 }

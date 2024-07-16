@@ -13,7 +13,6 @@ import {
     type UserSelectMenuInteraction,
 } from "discord.js";
 import type { Player } from "shoukaku";
-
 import type { Song } from "../../structures/Dispatcher.js";
 import { type Dispatcher, Event, type heemusic } from "../../structures/index.js";
 import { trackStart } from "../../utils/SetupSystem.js";
@@ -26,7 +25,7 @@ export default class TrackStart extends Event {
     }
 
     public async run(player: Player, track: Song, dispatcher: Dispatcher): Promise<void> {
-        if (track && !track.info) return;
+        if (!track?.info) return;
 
         const guild = this.client.guilds.cache.get(player.guildId);
         if (!guild) return;
@@ -60,9 +59,11 @@ export default class TrackStart extends Event {
             .setTimestamp();
 
         const setup = await this.client.db.getSetup(guild.id);
+
         if (setup?.textId) {
             const textChannel = guild.channels.cache.get(setup.textId) as TextChannel;
             const id = setup.messageId;
+
             if (textChannel) {
                 await trackStart(id, textChannel, dispatcher, track, this.client);
             }
@@ -71,6 +72,7 @@ export default class TrackStart extends Event {
                 embeds: [embed],
                 components: [createButtonRow(dispatcher)],
             });
+
             dispatcher.nowPlayingMessage = message;
             createCollector(message, dispatcher, track, embed, this.client);
         }
@@ -116,7 +118,7 @@ function createCollector(message: any, dispatcher: Dispatcher, _track: Song, emb
         },
     });
 
-    collector.on("collect", async interaction => {
+    collector.on("collect", async (interaction) => {
         if (!(await checkDj(client, interaction))) {
             await interaction.reply({
                 content: "You need to have the DJ role to use this command.",
@@ -148,15 +150,9 @@ function createCollector(message: any, dispatcher: Dispatcher, _track: Song, emb
                 }
                 break;
             case "resume":
-                if (dispatcher.pause) {
-                    dispatcher.pause();
-                    await interaction.deferUpdate();
-                    await editMessage(`Resumed by ${interaction.user.tag}`);
-                } else {
-                    dispatcher.pause();
-                    await interaction.deferUpdate();
-                    await editMessage(`Paused by ${interaction.user.tag}`);
-                }
+                dispatcher.pause();
+                await interaction.deferUpdate();
+                await editMessage(dispatcher.paused ? `Paused by ${interaction.user.tag}` : `Resumed by ${interaction.user.tag}`);
                 break;
             case "stop":
                 dispatcher.stop();
@@ -174,19 +170,17 @@ function createCollector(message: any, dispatcher: Dispatcher, _track: Song, emb
                 }
                 break;
             case "loop":
+                await interaction.deferUpdate();
                 switch (dispatcher.loop) {
                     case "off":
-                        await interaction.deferUpdate();
                         dispatcher.loop = "repeat";
                         await editMessage(`Looping by ${interaction.user.tag}`);
                         break;
                     case "repeat":
-                        await interaction.deferUpdate();
                         dispatcher.loop = "queue";
                         await editMessage(`Looping Queue by ${interaction.user.tag}`);
                         break;
                     case "queue":
-                        await interaction.deferUpdate();
                         dispatcher.loop = "off";
                         await editMessage(`Looping Off by ${interaction.user.tag}`);
                         break;

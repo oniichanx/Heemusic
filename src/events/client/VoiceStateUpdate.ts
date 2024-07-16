@@ -1,5 +1,4 @@
 import { ChannelType, type GuildMember, type VoiceState } from "discord.js";
-
 import { Event, type heemusic } from "../../structures/index.js";
 
 export default class VoiceStateUpdate extends Event {
@@ -22,11 +21,10 @@ export default class VoiceStateUpdate extends Event {
         const vc = newState.guild.channels.cache.get(vcConnection.channelId);
         if (!(vc && vc.members instanceof Map)) return;
 
-        if (!newState.guild.members.cache.get(this.client.user.id)?.voice.channelId) {
-            const is247 = await this.client.db.get_247(guildId);
-            if (!is247 && player) {
-                return player.destroy();
-            }
+        const is247 = await this.client.db.get_247(guildId);
+
+        if (!(newState.guild.members.cache.get(this.client.user.id)?.voice.channelId || !is247) && player) {
+            return player.destroy();
         }
 
         if (
@@ -55,20 +53,16 @@ export default class VoiceStateUpdate extends Event {
 
         if (newState.id === this.client.user.id && newState.serverMute && !player.paused) {
             player.pause();
-        }
-
-        if (newState.id === this.client.user.id && !newState.serverMute && player.paused) {
+        } else if (newState.id === this.client.user.id && !newState.serverMute && player.paused) {
             player.pause();
         }
 
         if (vc.members instanceof Map && [...vc.members.values()].filter((x: GuildMember) => !x.user.bot).length <= 0) {
-            const is247 = await this.client.db.get_247(guildId);
-
             setTimeout(async () => {
                 const vcConnection = player.node.manager.connections.get(guildId);
                 if (!vcConnection?.channelId) return;
 
-                const playerVoiceChannel = newState.guild.channels.cache.get(vcConnection.channelId);;
+                const playerVoiceChannel = newState.guild.channels.cache.get(vcConnection.channelId);
                 if (
                     player &&
                     playerVoiceChannel &&

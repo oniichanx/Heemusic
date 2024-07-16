@@ -1,7 +1,4 @@
-//TODO
-
 import { LoadType } from "shoukaku";
-
 import { Command, type Context, type heemusic } from "../../structures/index.js";
 
 export default class PlayNext extends Command {
@@ -43,6 +40,7 @@ export default class PlayNext extends Command {
             ],
         });
     }
+    
     public async run(client: heemusic, ctx: Context, args: string[]): Promise<any> {
         const query = args.join(" ");
         let player = client.queue.get(ctx.guild.id);

@@ -1,5 +1,4 @@
 import type { TextChannel } from "discord.js";
-
 import type { heemusic } from "../structures/index.js";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
@@ -9,17 +8,17 @@ export default class BotLog {
 
         const channel = client.channels.cache.get(client.config.logChannelId) as TextChannel;
         if (!channel) return;
-
-        const colors: { [key: string]: number } = {
+        
+        const colors = {
             error: 0xff0000,
             warn: 0xffff00,
             info: 0x00ff00,
             success: 0x00ff00,
-        };
-        const color = colors[type] || 0x000000;
+        } as const;
 
+        const color = colors[type];
         const embed = client.embed().setColor(color).setDescription(message).setTimestamp();
-
+        
         channel.send({ embeds: [embed] }).catch(() => {});
     }
 }

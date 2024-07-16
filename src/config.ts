@@ -1,9 +1,8 @@
 import dotenv from "dotenv";
-
 import { SearchEngine } from "./types.js";
-
 dotenv.config();
 
+const parseBoolean = (value?: string): boolean => value?.trim().toLowerCase() === "true";
 export default {
     token: process.env.TOKEN,
     prefix: process.env.PREFIX,
@@ -14,14 +13,14 @@ export default {
         yellow: 0xffff00,
         main: 0x2f3136,
     },
-    keepAlive: process.env.KEEP_ALIVE ? parseBoolean(process.env.KEEP_ALIVE) : false, // for https://replit.com keep alive bot 24/7
-    autoNode: process.env.AUTO_NODE ? parseBoolean(process.env.AUTO_NODE) : true, // auto node for heemusic bot it is gave from lavainfo-api "https://lavainfo-api.deno.dev"
+    keepAlive: parseBoolean(process.env.KEEP_ALIVE), // for https://replit.com keep alive bot 24/7
+    autoNode: parseBoolean(process.env.AUTO_NODE), // auto node for heemusic bot it is gave from lavainfo-api "https://lavainfo-api.deno.dev"
     searchEngine: process.env.SEARCH_ENGINE || SearchEngine.YouTube, // search engine for music
-    maxPlaylistSize: process.env.MAX_PLAYLIST_SIZE ? parseInt(process.env.MAX_PLAYLIST_SIZE) : 100, // max playlist size
+    maxPlaylistSize: parseInt(process.env.MAX_PLAYLIST_SIZE || "100"), // max playlist size
     botStatus: process.env.BOT_STATUS || "online", // online, idle, dnd, invisible
     botActivity: process.env.BOT_ACTIVITY || "heemusic", // set the bot activity
-    botActivityType: process.env.BOT_ACTIVITY_TYPE ? parseInt(process.env.BOT_ACTIVITY_TYPE) : 2, // 0 = PLAYING, 1 = STREAMING, 2 = LISTENING, 3 = WATCHING
-    maxQueueSize: process.env.MAX_QUEUE_SIZE ? parseInt(process.env.MAX_QUEUE_SIZE) : 100, // max queue size
+    botActivityType: parseInt(process.env.BOT_ACTIVITY_TYPE || "2"), // 0 = PLAYING, 1 = STREAMING, 2 = LISTENING, 3 = WATCHING
+    maxQueueSize: parseInt(process.env.MAX_QUEUE_SIZE || "100"), // max queue size
     owners: process.env.OWNER_IDS ? JSON.parse(process.env.OWNER_IDS) : [], // bot owners
     clientId: process.env.CLIENT_ID, // bot client id
     clientSecret: process.env.CLIENT_SECRET || "",
@@ -37,28 +36,17 @@ export default {
         applemusic: "https://i.imgur.com/Wi0oyYm.png",
         deezer: "https://i.imgur.com/xyZ43FG.png",
     }, // music icons
-    production: process.env.PRODUCTION ? parseBoolean(process.env.PRODUCTION) : true,
+    production: parseBoolean(process.env.PRODUCTION) ?? true,
     lavalink: [
         {
             url: process.env.LAVALINK_URL,
             auth: process.env.LAVALINK_AUTH,
             name: process.env.LAVALINK_NAME,
-            secure: process.env.LAVALINK_SECURE ? parseBoolean(process.env.LAVALINK_SECURE) : false,
+            secure: parseBoolean(process.env.LAVALINK_SECURE),
         },
     ], // lavalink nodes
 };
 
-function parseBoolean(value: string | undefined): boolean {
-    if (typeof value === "string") {
-        value = value.trim().toLowerCase();
-    }
-    switch (value) {
-        case "true":
-            return true;
-        default:
-            return false;
-    }
-}
 /**
  * Project: heemusic
  * Author: oniichanx

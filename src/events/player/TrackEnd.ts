@@ -1,5 +1,4 @@
 import type { Player } from "shoukaku";
-
 import type { Song } from "../../structures/Dispatcher.js";
 import { type Dispatcher, Event, type heemusic } from "../../structures/index.js";
 
@@ -30,7 +29,7 @@ export default class TrackEnd extends Event {
         if (dispatcher.autoplay) {
             await dispatcher.Autoplay(track);
         }
-
+        
         if (nowPlayingMessage?.deletable) {
             await nowPlayingMessage.delete().catch(() => {});
         }

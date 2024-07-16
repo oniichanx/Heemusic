@@ -1,6 +1,5 @@
 import type { Guild } from "discord.js";
 import type { LavalinkResponse, Node } from "shoukaku";
-
 import { Dispatcher, type heemusic } from "./index.js";
 
 export class Queue extends Map<string, Dispatcher> {
@@ -41,7 +40,6 @@ export class Queue extends Map<string, Dispatcher> {
                 shardId: guild.shardId,
                 deaf: true,
             });
-
             dispatcher = new Dispatcher({
                 client: this.client,
                 guildId: guild.id,
@@ -49,14 +47,12 @@ export class Queue extends Map<string, Dispatcher> {
                 player,
                 node,
             });
-
             this.set(guild.id, dispatcher);
             this.client.shoukaku.emit("playerCreate", dispatcher.player);
         }
-
         return dispatcher;
     }
-
+    
     public async search(query: string): Promise<LavalinkResponse | null> {
         const node = this.client.shoukaku.options.nodeResolver(this.client.shoukaku.nodes);
         const searchQuery = /^https?:\/\//.test(query) ? query : `${this.client.config.searchEngine}:${query}`;
