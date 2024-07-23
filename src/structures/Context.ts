@@ -17,6 +17,7 @@ import {
     type TextChannel,
     type User,
 } from "discord.js";
+import { T } from "./I18n.js";
 import type { heemusic } from "./index.js";
 
 export default class Context {
@@ -34,7 +35,7 @@ export default class Context {
     public member: GuildMemberResolvable | GuildMember | APIInteractionGuildMember | null;
     public args: any[];
     public msg: any;
-
+    public guildLocale: string;
     constructor(ctx: ChatInputCommandInteraction | Message, args: any[]) {
         this.ctx = ctx;
         this.interaction = ctx instanceof ChatInputCommandInteraction ? ctx : null;
@@ -58,7 +59,6 @@ export default class Context {
     public setArgs(args: any[]): void {
         this.args = this.isInteraction ? args.map((arg: { value: any }) => arg.value) : args;
     }
-
     public async sendMessage(content: string | MessagePayload | MessageCreateOptions | InteractionReplyOptions): Promise<Message> {
         if (this.isInteraction) {
             if (typeof content === "string" || isInteractionReplyOptions(content)) {
@@ -92,6 +92,9 @@ export default class Context {
 
         this.msg = await (this.message.channel as TextChannel).send(content);
         return this.msg;
+    }
+    public locale(key: string, ...args: any) {
+        return T(this.guildLocale, key, ...args);
     }
 
     public async sendFollowUp(content: string | MessagePayload | MessageCreateOptions | InteractionReplyOptions): Promise<void> {

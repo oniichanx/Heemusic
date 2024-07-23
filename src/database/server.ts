@@ -121,6 +121,26 @@ export default class ServerData {
         });
     }
 
+    public async getUserPlaylists(userId: string) {
+        return await this.prisma.playlist.findMany({
+            where: {
+                userId: userId,
+            },
+        });
+    }
+
+    public async createPlaylistWithSongs(userId: string, name: string, songs: any[]): Promise<void> {
+        await this.prisma.playlist.create({
+            data: {
+                userId,
+                name,
+                songs: {
+                    create: songs.map((song) => ({ track: song.track })),
+                },
+            },
+        });
+    }
+    
     public async createPlaylist(userId: string, name: string): Promise<void> {
         await this.prisma.playlist.create({ data: { userId, name } });
     }
@@ -135,7 +155,10 @@ export default class ServerData {
         const playlist = await this.getPlaylist(userId, name);
         if (playlist) {
             await this.prisma.song.create({
-                data: { track: JSON.stringify(song), playlistId: playlist.id },
+                data: {
+                    track: JSON.stringify(song),
+                    playlistId: playlist.id,
+                },
             });
         } else {
             await this.createPlaylist(userId, name);
@@ -143,11 +166,16 @@ export default class ServerData {
         }
     }
 
-    public async removeSong(userId: string, name: string, song: string): Promise<void> {
-        const playlist = await this.getPlaylist(userId, name);
+    public async removeSong(userId: string, playlistName: string, encodedSong: string): Promise<void> {
+        const playlist = await this.getPlaylist(userId, playlistName);
         if (playlist) {
-            await this.prisma.song.delete({
-                where: { track_playlistId: { track: song, playlistId: playlist.id } },
+            await this.prisma.song.deleteMany({
+                where: {
+                    playlistId: playlist.id,
+                    track: {
+                        contains: encodedSong,
+                    },
+                },
             });
         }
     }
@@ -177,6 +205,24 @@ export default class ServerData {
 
     public async clearAllSongs(): Promise<void> {
         await this.prisma.song.deleteMany();
+    }
+
+    public async updateLanguage(guildId: string, language: string): Promise<void> {
+        const guild = await this.get(guildId);
+        if (guild) {
+            await this.prisma.guild.update({
+                where: { guildId },
+                data: { language },
+            });
+        } else {
+            await this.createGuild(guildId);
+            await this.updateLanguage(guildId, language);
+        }
+    }
+
+    public async getLanguage(guildId: string): Promise<string> {
+        const guild = await this.get(guildId);
+        return guild?.language ?? config.defaultLanguage;
     }
 }
 

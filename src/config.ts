@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { SearchEngine } from "./types.js";
+import { Language, SearchEngine } from "./types.js";
 dotenv.config();
 
 const parseBoolean = (value?: string): boolean => value?.trim().toLowerCase() === "true";
@@ -13,6 +13,7 @@ export default {
         yellow: 0xffff00,
         main: 0x2f3136,
     },
+    defaultLanguage: process.env.DEFAULT_LANGUAGE || Language.EnglishUS,
     keepAlive: parseBoolean(process.env.KEEP_ALIVE), // for https://replit.com keep alive bot 24/7
     autoNode: parseBoolean(process.env.AUTO_NODE), // auto node for heemusic bot it is gave from lavainfo-api "https://lavainfo-api.deno.dev"
     searchEngine: process.env.SEARCH_ENGINE || SearchEngine.YouTube, // search engine for music

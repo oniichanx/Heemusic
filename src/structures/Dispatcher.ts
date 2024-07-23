@@ -129,6 +129,7 @@ export default class Dispatcher {
         this.history = [];
         this.client.shoukaku.leaveVoiceChannel(this.guildId);
         this.client.queue.delete(this.guildId);
+        this.player.destroy();
         if (!this.stopped) {
             this.client.shoukaku.emit("playerDestroy", this.player);
         }

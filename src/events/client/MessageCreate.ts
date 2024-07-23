@@ -16,6 +16,7 @@ export default class MessageCreate extends Event {
         if (setup && setup.textId === message.channelId) {
             return this.client.emit("setupSystem", message);
         }
+        const locale = await this.client.db.getLanguage(message.guildId);
 
         const guild = await this.client.db.get(message.guildId);
         const mention = new RegExp(`^<@!?${this.client.user.id}>( |)$`);
@@ -38,7 +39,7 @@ export default class MessageCreate extends Event {
 
         const ctx = new Context(message, args);
         ctx.setArgs(args);
-
+        ctx.guildLocale = locale;
         if (!message.guild.members.resolve(this.client.user)?.permissions.has(PermissionFlagsBits.ViewChannel)) return;
 
         const clientMember = message.guild.members.resolve(this.client.user);
@@ -122,7 +123,7 @@ export default class MessageCreate extends Event {
 
             if (command.player.active) {
                 const queue = this.client.queue.get(message.guildId);
-                if (!(queue?.queue && !queue.current)) {
+                if (!queue?.queue && queue.current) {
                     await message.reply({
                         content: "Nothing is playing right now.",
                     });
@@ -140,15 +141,16 @@ export default class MessageCreate extends Event {
                         });
                         return;
                     }
-
-                    const hasDJRole = message.member.roles.cache.some((role) => djRole.map((r) => r.roleId).includes(role.id));
-                    if (!(hasDJRole && !message.member.permissions.has(PermissionFlagsBits.ManageGuild))) {
-                        await message
-                            .reply({
-                                content: "You need to have the DJ role to use this command.",
-                            })
-                            .then((msg) => setTimeout(() => msg.delete(), 5000));
-                        return;
+                    const findDJRole = message.member.roles.cache.find((x: any) => djRole.map((y: any) => y.roleId).includes(x.id));
+                    if (!findDJRole) {
+                        if (!message.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
+                            await message
+                                .reply({
+                                    content: "You need to have the DJ role to use this command.",
+                                })
+                                .then((msg) => setTimeout(() => msg.delete(), 5000));
+                            return;
+                        }
                     }
                 }
             }

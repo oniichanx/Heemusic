@@ -21,21 +21,29 @@ export default class InteractionCreate extends Event {
     public async run(interaction: CommandInteraction | AutocompleteInteraction): Promise<any> {
         if (interaction instanceof CommandInteraction && interaction.isCommand()) {
             const setup = await this.client.db.getSetup(interaction.guildId);
-            if (setup && interaction.channelId === setup.textId) {
+            const allowedCategories = ["filters", "music", "playlist"];
+            const commandInSetup = this.client.commands.get(interaction.commandName);
+
+            if (
+                setup &&
+                interaction.channelId === setup.textId &&
+                !(commandInSetup && allowedCategories.includes(commandInSetup.category))
+            ) {
                 return await interaction.reply({
-                    content: `You can't use commands in setup channel.`,
+                    content: `You can't use this command in setup channel.`,
                     ephemeral: true,
                 });
             }
 
             const { commandName } = interaction;
             await this.client.db.get(interaction.guildId);
+            const locale = await this.client.db.getLanguage(interaction.guildId);
             const command = this.client.commands.get(commandName);
             if (!command) return;
 
             const ctx = new Context(interaction as any, interaction.options.data as any);
             ctx.setArgs(interaction.options.data as any);
-
+            ctx.guildLocale = locale;
             const clientMember = interaction.guild.members.resolve(this.client.user);
             if (!(interaction.inGuild() && interaction.channel.permissionsFor(clientMember)?.has(PermissionFlagsBits.ViewChannel))) return;
 
@@ -169,7 +177,12 @@ export default class InteractionCreate extends Event {
             }
 
             try {
-                await command.run(this.client, ctx, ctx.args);
+                const _reply = await command.run(this.client, ctx, ctx.args);
+                if (setup && interaction.channelId === setup.textId && allowedCategories.includes(command.category)) {
+                    setTimeout(() => {
+                        (interaction as CommandInteraction).deleteReply().catch(() => {});
+                    }, 5000);
+                }
             } catch (error) {
                 this.client.logger.error(error);
                 await interaction.reply({

@@ -6,12 +6,12 @@ export default class Invite extends Command {
         super(client, {
             name: "invite",
             description: {
-                content: "Sends the bot's invite link",
+                content: "cmd.invite.description",
                 examples: ["invite"],
                 usage: "invite",
             },
             category: "info",
-            aliases: ["inv"],
+            aliases: ["iv"],
             cooldown: 3,
             args: false,
             player: {
@@ -34,19 +34,15 @@ export default class Invite extends Command {
         const embed = this.client.embed();
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
-                .setLabel("Invite")
+            .setLabel(ctx.locale("buttons.invite"))
                 .setStyle(ButtonStyle.Link)
                 .setURL(
                     `https://discord.com/api/oauth2/authorize?client_id=${client.config.clientId}&permissions=8&scope=bot%20applications.commands`,
                 ),
-            new ButtonBuilder().setLabel("My Server").setStyle(ButtonStyle.Link).setURL("https://discord.gg/heelee"),
+                new ButtonBuilder().setLabel(ctx.locale("buttons.support")).setStyle(ButtonStyle.Link).setURL("https://discord.gg/heelee"),
         );
         return await ctx.sendMessage({
-            embeds: [
-                embed
-                    .setColor(this.client.color.main)
-                    .setDescription("นายสามารถชวนฉันไปห้องเธอได้โดยคลิกที่ปุ่มด้านล่าง! ถ้าท้องขึ้นมาไม่ใช่ลูกกูน่ะแม่เย็ด!"),
-            ],
+            embeds: [embed.setColor(this.client.color.main).setDescription(ctx.locale("cmd.invite.content"))],
             components: [row],
         });
     }

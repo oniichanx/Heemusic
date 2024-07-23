@@ -10,7 +10,7 @@ export default class GuildList extends Command {
                 usage: "guildlist",
             },
             category: "dev",
-            aliases: ["glt"],
+            aliases: ["glst"],
             cooldown: 3,
             args: false,
             player: {
@@ -30,7 +30,7 @@ export default class GuildList extends Command {
     }
 
     public async run(client: heemusic, ctx: Context): Promise<any> {
-        const guilds = this.client.guilds.cache.map((guild) => `- **${guild.name}** - (${guild.id})`);;
+        const guilds = client.guilds.cache.map((guild) => `- **${guild.name}** - (${guild.id})`);
         const chunks = client.utils.chunk(guilds, 10) || [[]];
         const pages = chunks.map((chunk, index) => {
             return this.client

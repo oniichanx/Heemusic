@@ -7,7 +7,7 @@ export default class NodeDisconnect extends Event {
             name: "nodeDisconnect",
         });
     }
-    
+
     // biome-ignore lint/suspicious/useAwait: <explanation>
     public async run(node: string, count: number): Promise<void> {
         const message = `Node ${node} disconnected ${count} times`;

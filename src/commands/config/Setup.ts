@@ -12,7 +12,7 @@ export default class Setup extends Command {
                 usage: "setup",
             },
             category: "config",
-            aliases: ["setup"],
+            aliases: ["set"],
             cooldown: 3,
             args: true,
             player: {
@@ -49,7 +49,7 @@ export default class Setup extends Command {
 
     public async run(client: heemusic, ctx: Context, args: string[]): Promise<any> {
         const subCommand = ctx.isInteraction ? ctx.interaction.options.data[0].name : args[0];
-        const embed = client.embed().setColor(client.color.main);
+        const embed = client.embed().setColor(this.client.color.main);
         switch (subCommand) {
             case "create": {
                 const data = await client.db.getSetup(ctx.guild.id);
@@ -103,7 +103,7 @@ export default class Setup extends Command {
                     embeds: [
                         {
                             description: `ช่องทางขอต่อคิวเข้าเย็ดในห้อง ได้ถูกสร้างเข้ามาอยู่แล้ว <#${textChannel.id}>.`,
-                            color: client.color.main,
+                            color: this.client.color.main,
                         },
                     ],
                 });
@@ -129,7 +129,7 @@ export default class Setup extends Command {
                         {
                             description: 
                                 "ช่องทางขอต่อคิวเข้าเย็ดในห้อง ได้ถูกลบล้างแล้ว. ถ้าห้องยังไม่ได้ถูกลบในรูปแบบคำสั่ง, ให้ทำการลบแบบอัตโนมือเองนะ.",
-                            color: client.color.main,
+                            color: this.client.color.main,
                         },
                     ],
                 });

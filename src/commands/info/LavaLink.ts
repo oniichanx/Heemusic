@@ -5,7 +5,7 @@ export default class LavaLink extends Command {
         super(client, {
             name: "lavalink",
             description: {
-                content: "Shows the current Lavalink stats",
+                content: "cmd.lavalink.description",
                 examples: ["lavalink"],
                 usage: "lavalink",
             },
@@ -32,10 +32,11 @@ export default class LavaLink extends Command {
     public async run(client: heemusic, ctx: Context): Promise<any> {
         const embed = this.client
             .embed()
-            .setTitle("Lavalink Stats")
+            .setTitle(ctx.locale("cmd.lavalink.title"))
             .setColor(this.client.color.main)
-            .setThumbnail(this.client.user.avatarURL({}))
+            .setThumbnail(this.client.user.avatarURL())
             .setTimestamp();
+
         client.shoukaku.nodes.forEach(node => {
             const statusEmoji = node.stats ? "🟢" : "🔴";
             const stats = node.stats || {
@@ -46,19 +47,24 @@ export default class LavaLink extends Command {
                 memory: { used: 0, reservable: 0 },
             };
             const formattedStats = `\`\`\`yaml
-Player: ${stats.players}
-Playing Players: ${stats.playingPlayers}
-Uptime: ${client.utils.formatTime(stats.uptime)}
-Cores: ${stats.cpu.cores} Core(s)
-Memory Usage: ${client.utils.formatBytes(stats.memory.used)} / ${client.utils.formatBytes(stats.memory.reservable)}
-System Load: ${(stats.cpu.systemLoad * 100).toFixed(2)}%
-Lavalink Load: ${(stats.cpu.lavalinkLoad * 100).toFixed(2)}%
-\`\`\``;
+            ${ctx.locale("cmd.lavalink.content", {
+                players: stats.players,
+                playingPlayers: stats.playingPlayers,
+                uptime: client.utils.formatTime(stats.uptime),
+                cores: stats.cpu.cores,
+                used: client.utils.formatBytes(stats.memory.used),
+                reservable: client.utils.formatBytes(stats.memory.reservable),
+                systemLoad: (stats.cpu.systemLoad * 100).toFixed(2),
+                lavalinkLoad: (stats.cpu.lavalinkLoad * 100).toFixed(2),
+            })}
+            \`\`\``;
+            
             embed.addFields({
-                name: `Name: ${node.name} (${statusEmoji})`,
+                name: `${node.name} (${statusEmoji})`,
                 value: formattedStats,
             });
         });
+        
         return await ctx.sendMessage({ embeds: [embed] });
     }
 }

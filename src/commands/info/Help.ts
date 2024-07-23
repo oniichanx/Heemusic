@@ -5,7 +5,7 @@ export default class Help extends Command {
         super(client, {
             name: "help",
             description: {
-                content: "Shows the help menu",
+                description: "cmd.help.options.command",
                 examples: ["help"],
                 usage: "help",
             },
@@ -37,57 +37,61 @@ export default class Help extends Command {
     }
 
     public async run(client: heemusic, ctx: Context, args: string[]): Promise<any> {
-        const embed = client.embed();
+        const embed = this.client.embed();
         const guild = await client.db.get(ctx.guild.id);
         const commands = this.client.commands.filter((cmd) => cmd.category !== "dev");
         const categories = [...new Set(commands.map((cmd) => cmd.category))];
+
         if (args[0]) {
             const command = this.client.commands.get(args[0].toLowerCase());
             if (!command) {
                 return await ctx.sendMessage({
-                    embeds: [client.embed().setColor(client.color.red).setDescription(`Command \`${args[0]}\` not found`)],
+                    embeds: [embed.setColor(this.client.color.red).setDescription(ctx.locale("cmd.help.not_found", { cmdName: args[0] }))],
                 });
             }
             const helpEmbed = embed
-                .setColor(this.client.color.main)
-                .setTitle(`Help Menu - ${command.name}`)
-                .setDescription(`**Description:** ${command.description.content}
-**Usage:** ${guild.prefix}${command.description.usage}
-**Examples:** ${command.description.examples.map((example) => `${guild.prefix}${example}`).join(", ")}
-**Aliases:** ${command.aliases.map((alias) => `\`${alias}\``).join(", ")}
-**Category:** ${command.category}
-**Cooldown:** ${command.cooldown} seconds
-**Permissions:** ${command.permissions.user.length > 0 ? command.permissions.user.map((perm) => `\`${perm}\``).join(", ") : "None"}
-**Bot Permissions:** ${command.permissions.client.map((perm) => `\`${perm}\``).join(", ")}
-**Developer Only:** ${command.permissions.dev ? "Yes" : "No"}
-**Slash Command:** ${command.slashCommand ? "Yes" : "No"}
-**Args:** ${command.args ? "Yes" : "No"}
-**Player:** ${command.player.active ? "Yes" : "No"}
-**DJ:** ${command.player.dj ? "Yes" : "No"}
-**DJ Permissions:** ${command.player.djPerm ? command.player.djPerm : "None"}
-**Voice:** ${command.player.voice ? "Yes" : "No"}`);
-            ctx.sendMessage({ embeds: [helpEmbed] });
-        } else {
-            const fields = categories.map((category) => ({
-                name: category,
-                value: commands
-                    .filter((cmd) => cmd.category === category)
-                    .map((cmd) => `\`${cmd.name}\``)
-                    .join(", "),
-                inline: false,
-            }));
-            const helpEmbed = embed
-                .setColor(this.client.color.main)
-                .setTitle("คำสั่งดูดหี")
+                .setColor(client.color.main)
+                .setTitle(`${ctx.locale("cmd.help.title")} - ${command.name}`)
                 .setDescription(
-                    `เฮ้ ไอหนู! ฉันนาย ${this.client.user.username}, ฉันคือบอทที่สร้างมาเพื่อดูดหีดูดควยน่ะ สร้างโดย [DooHeeMusic](https://github.com/oniichanx) และ Discord. นายสามารถใช้ \`${guild.prefix}help <command>\` เพื่อดูคำสั่งทวงท่าของฉันได้นะ.`,
-                )
-                .setFooter({
-                    text: `ใช้ ${guild.prefix}help <command> ใช้สำหรับดูทวงท่าที่ฉันสามารถทำได้น่ะ`,
-                });
-            helpEmbed.addFields(...fields);
-            ctx.sendMessage({ embeds: [helpEmbed] });
+                    ctx.locale("cmd.help.help_cmd", {
+                        description: ctx.locale(command.description.content),
+                        usage: `${guild.prefix}${command.description.usage}`,
+                        examples: command.description.examples.map((example) => `${guild.prefix}${example}`).join(", "),
+                        aliases: command.aliases.map((alias) => `\`${alias}\``).join(", "),
+                        category: command.category,
+                        cooldown: command.cooldown,
+                        premUser:
+                            command.permissions.user.length > 0 ? command.permissions.user.map((perm) => `\`${perm}\``).join(", ") : "None",
+                        premBot: command.permissions.client.map((perm) => `\`${perm}\``).join(", "),
+                        dev: command.permissions.dev ? "Yes" : "No",
+                        slash: command.slashCommand ? "Yes" : "No",
+                        args: command.args ? "Yes" : "No",
+                        player: command.player.active ? "Yes" : "No",
+                        dj: command.player.dj ? "Yes" : "No",
+                        djPerm: command.player.djPerm ? command.player.djPerm : "None",
+                        voice: command.player.voice ? "Yes" : "No",
+                    }),
+                );
+            return await ctx.sendMessage({ embeds: [helpEmbed] });
         }
+
+        const fields = categories.map((category) => ({
+            name: category,
+            value: commands
+                .filter((cmd) => cmd.category === category)
+                .map((cmd) => `\`${cmd.name}\``)
+                .join(", "),
+            inline: false,
+        }));
+        
+        const helpEmbed = embed
+            .setColor(client.color.main)
+            .setTitle(ctx.locale("cmd.help.title"))
+            .setDescription(ctx.locale("cmd.help.content", { bot: client.user.username, prefix: guild.prefix }))
+            .setFooter({ text: ctx.locale("cmd.help.footer", { prefix: guild.prefix }) })
+            .addFields(...fields);
+            
+        return await ctx.sendMessage({ embeds: [helpEmbed] });
     }
 }
 

@@ -32,10 +32,11 @@ export default class Tremolo extends Command {
     public async run(client: heemusic, ctx: Context): Promise<any> {
         const player = client.queue.get(ctx.guild.id);
         const tremoloEnabled = player.filters.includes("tremolo");
+
         if (tremoloEnabled) {
             player.player.setTremolo();
             player.filters.splice(player.filters.indexOf("tremolo"), 1);
-            return await ctx.sendMessage({
+            await ctx.sendMessage({
                 embeds: [
                     {
                         description: "Tremolo filter has been disabled.",
@@ -46,11 +47,11 @@ export default class Tremolo extends Command {
         }
         player.player.setTremolo({ depth: 0.75, frequency: 4 });
         player.filters.push("tremolo");
-        return await ctx.sendMessage({
+        await ctx.sendMessage({
             embeds: [
                 {
                     description: "Tremolo filter has been enabled.",
-                    color: client.color.main,
+                    color: this.client.color.main,
                 },
             ],
         });

@@ -10,7 +10,7 @@ export default class Pause extends Command {
                 usage: "pause",
             },
             category: "music",
-            aliases: [],
+            aliases: ["pu"],
             cooldown: 3,
             args: false,
             player: {
@@ -32,11 +32,13 @@ export default class Pause extends Command {
     public async run(client: heemusic, ctx: Context): Promise<any> {
         const player = client.queue.get(ctx.guild.id);
         const embed = this.client.embed();
+
         if (player.paused) {
             return await ctx.sendMessage({
                 embeds: [embed.setColor(this.client.color.red).setDescription("The song is already paused.")],
             });
         }
+        
         player.pause();
         return await ctx.sendMessage({
             embeds: [embed.setColor(this.client.color.main).setDescription("Successfully paused the song.")],

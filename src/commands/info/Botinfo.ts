@@ -13,7 +13,7 @@ export default class Botinfo extends Command {
                 usage: "botinfo",
             },
             category: "info",
-            aliases: ["info", "bi"],
+            aliases: ["bi", "info", "stats", "status"],
             cooldown: 3,
             args: false,
             player: {
@@ -37,6 +37,7 @@ export default class Botinfo extends Command {
         const osUptime = client.utils.formatTime(os.uptime());
         const osHostname = os.hostname();
         const cpuInfo = `${os.arch()} (${os.cpus().length} cores)`;
+        const cpuUsed = (await usagePercent({ coreIndex: 0, sampleMs: 2000 })).percent.toFixed(2);
         const cpuUsed = (await usagePercent({ coreIndex: 0, sampleMs: 2000 })).percent;
         const memTotal = showTotalMemory(true);
         const memUsed = (process.memoryUsage().rss / 1024 ** 2).toFixed(2);
