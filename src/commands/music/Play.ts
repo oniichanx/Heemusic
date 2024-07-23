@@ -1,5 +1,5 @@
 import { LoadType } from "shoukaku";
-import { Command, heemusic, type Context, type heemusic } from "../../structures/index.js";
+import { Command, type Context, type heemusic } from "../../structures/index.js";
 
 export default class Play extends Command {
     constructor(client: heemusic) {

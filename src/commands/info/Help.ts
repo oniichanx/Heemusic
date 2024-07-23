@@ -5,7 +5,7 @@ export default class Help extends Command {
         super(client, {
             name: "help",
             description: {
-                description: "cmd.help.options.command",
+                content: "cmd.help.description",
                 examples: ["help"],
                 usage: "help",
             },

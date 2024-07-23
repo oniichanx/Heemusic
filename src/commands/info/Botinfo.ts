@@ -38,7 +38,6 @@ export default class Botinfo extends Command {
         const osHostname = os.hostname();
         const cpuInfo = `${os.arch()} (${os.cpus().length} cores)`;
         const cpuUsed = (await usagePercent({ coreIndex: 0, sampleMs: 2000 })).percent.toFixed(2);
-        const cpuUsed = (await usagePercent({ coreIndex: 0, sampleMs: 2000 })).percent;
         const memTotal = showTotalMemory(true);
         const memUsed = (process.memoryUsage().rss / 1024 ** 2).toFixed(2);
         const nodeVersion = process.version;

@@ -47,7 +47,7 @@ export default class Command {
     public player: CommandPlayer;
     public permissions: CommandPermissions;
     public slashCommand: boolean;
-    public options: ApplicationCommandOption[];
+    public options: APIApplicationCommandOption[];
     public category: string;
 
     constructor(client: heemusic, options: CommandOptions) {
