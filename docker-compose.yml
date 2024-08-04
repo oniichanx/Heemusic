@@ -1,0 +1,89 @@
+services:
+    ## services for lavalink
+    lavalink:
+        container_name: heemusic-lavalink
+        image: ghcr.io/lavalink-devs/lavalink
+        restart: on-failure
+        environment:
+            - SERVER_PORT=2333
+        volumes:
+            # mount application.yml from the same directory or use environment variables
+            - ./Lavalink/application.yml:/opt/Lavalink/application.yml
+            # persist plugins between restarts, make sure to set the correct permissions (user: 322, group: 322)
+            - ./Lavalink/plugins/:/opt/Lavalink/plugins/
+        
+        networks:
+            - lavalink
+        #expose:
+        # lavalink exposes port 2333 to connect to for other containers (this is for documentation purposes only)
+        #- 2333
+        #ports:
+        # you only need this if you want to make your lavalink accessible from outside of containers
+        #- "2333:2333"
+        healthcheck:
+            test: 'curl -H "Authorization: youshallnotpass" -s http://localhost:2333/version'
+            interval: 10s
+            timeout: 10s
+            retries: 5
+            start_period: 10s
+    # services for postgresql database
+    # postgres:
+    #         container_name: heemusic-postgres
+    #         image: postgres:16
+    #         restart: on-failure
+    #         environment:
+    #             POSTGRES_USER: heemusic
+    #             POSTGRES_PASSWORD: heemusic
+    #             POSTGRES_DB: heemusic
+    #
+    #         volumes:
+    #             - ./Postgres/data:/var/lib/postgresql/data
+    #         healthcheck:
+    #             test: 'pg_isready -U heemusic'
+    #             interval: 10s
+    #             timeout: 10s
+    #             retries: 5
+    #             start_period: 10s
+
+    # services for mongodb database
+    #mongodb:
+    #container_name: heemusic-mongodb
+    #image: 'bitnami/mongodb:4.4'
+    #restart: on-failure
+    #environment:
+    #MONGODB_ADVERTISED_HOSTNAME: 127.0.0.1
+    #MONGODB_REPLICA_SET_MODE: primary
+    #MONGODB_ROOT_USER: mongoadmin
+    #MONGODB_ROOT_PASSWORD: mongopassword
+    #MONGODB_REPLICA_SET_KEY: replicasetkey123
+    #volumes: - ./MongoDB/data:/data/db
+
+    # services for heemusic
+    heemusic:
+        container_name: heemusic
+        image: ghcr.io/oniichanx/heemusic:main
+        environment:
+            # Your lavalink url
+            - LAVALINK_URL=lavalink:2333
+            # Your lavalink password
+            - LAVALINK_AUTH=youshallnotpass
+            # Your lavalink name
+            - LAVALINK_NAME=heemusic
+            # Your lavalink secure (true or false)
+            - LAVALINK_SECURE=false
+            # database url
+        #    - DATABASE_URL= put your database url here (mongodb or postgres)
+        #   - DATABASE_URL=postgresql://heemusic:heemusic@postgres:5432/heemusic (for postgres)
+        #   - DATABASE_URL=mongodb://mongoadmin:mongopassword@mongodb:27017/heemusic?authSource=admin (for mongodb)
+
+        volumes:
+            # mount .env from the same directory or use environment variables
+            - .env:/opt/heemusic/.env
+            - ./locales:/opt/heemusic/locales
+        restart: on-failure
+        depends_on:
+            lavalink:
+                condition: service_healthy
+networks:
+    lavalink:
+        name: lavalink
