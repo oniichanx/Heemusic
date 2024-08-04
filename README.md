@@ -14,7 +14,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/oniichanx/heemusic">
-    <img src="https://media.discordapp.net/attachments/721455382177906828/1171111436722913340/IMG_5984.jpg" alt="heemusic" width="200" height="200">
+    <img src="https://cdn.discordapp.com/attachments/721455382177906828/1171111436722913340/IMG_5984.jpg?ex=66b04944&is=66aef7c4&hm=e64ae47a440152b3051c3ad5c9b1daa37812defd906c4e77138130f1104f8b27&" alt="heemusic" width="200" height="200">
   </a>
 
   <h1 align="center">heemusic</h1>
