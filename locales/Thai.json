@@ -277,10 +277,10 @@
 			},
 			"loading": "Loading...",
 			"errors": {
-				"search_error": "There was an error while searching.",
+				"search_error": "เกิดข้อผิดพลาดระหว่างการค้นหาหีเลีย.",
 				"no_results": "ไม่พบรูหีให้เด้า.",
-				"queue_too_long": "The queue is too long. The maximum length is {maxQueueSize} songs.",
-				"playlist_too_long": "The playlist is too long. The maximum length is {maxPlaylistSize} songs."
+				"queue_too_long": "กระเจี้ยวผมยาวสูงสุดคือ {maxQueueSize} นิ้วนะคุณ.",
+				"playlist_too_long": "ผู้หญิงเพลย์ลิสต์ยาวเกินไป ความยาวสูงสุดคือ {maxPlaylistSize} คน."
 			},
 			"added_to_queue": "Added [{title}]({uri}) to the queue.",
 			"added_playlist_to_queue": "Added {length} songs to the queue."
@@ -292,10 +292,10 @@
 			},
 			"loading": "Loading...",
 			"errors": {
-				"search_error": "There was an error while searching.",
+				"search_error": "เกิดข้อผิดพลาดระหว่างการค้นหาหีเลีย.",
 				"no_results": "ไม่พบรูหีให้เด้า.",
-				"queue_too_long": "The queue is too long. The maximum length is {maxQueueSize} songs.",
-				"playlist_too_long": "The playlist is too long. The maximum length is {maxPlaylistSize} songs."
+				"queue_too_long": "กระเจี้ยวผมยาวสูงสุดคือ {maxQueueSize} นิ้วนะคุณ.",
+				"playlist_too_long": "ผู้หญิงเพลย์ลิสต์ยาวเกินไป ความยาวสูงสุดคือ {maxPlaylistSize} คน."
 			},
 			"added_to_play_next": "Added [{title}]({uri}) to play next in the queue.",
 			"added_playlist_to_play_next": "Added {length} songs to play next in the queue."
@@ -537,11 +537,11 @@
 		"setupStart": {
 			"now_playing": "เขากำลังดูดไข่ผมม..",
 			"description": "[{title}]({uri}) by {author} • `[{length}]` - ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย <@{requester}>",
-			"error_searching": "There was an error while searching.",
+			"error_searching": "เกิดข้อผิดพลาดระหว่างการค้นหาหีเลีย.",
 			"no_results": "ไม่พบรูหีให้เด้า.",
-			"nothing_playing": "Nothing playing right now.",
-			"queue_too_long": "The queue is too long. The maximum length is {maxQueueSize} songs.",
-			"playlist_too_long": "The playlist is too long. The maximum length is {maxPlaylistSize} songs.",
+			"nothing_playing": "ไม่มีหีในสต็อกให้เย็ดอยู่. >>> [Invite](https://youtu.be/QAna8T9wvxw) | [Support](https://youtu.be/kEEECmshTjA) | [Website](https://twitter.com/parksunhaaa/status/1555420631315128320?s=12&t=PCnuQMcjF0NR1LB5_rX0iQ).",
+			"queue_too_long": "กระเจี้ยวผมยาวสูงสุดคือ {maxQueueSize} นิ้วนะคุณ.",
+			"playlist_too_long": "ผู้หญิงเพลย์ลิสต์ยาวเกินไป ความยาวสูงสุดคือ {maxPlaylistSize} คน.",
 			"added_to_queue": "Added [{title}]({uri}) to the queue.",
 			"added_playlist_to_queue": "Added [{length}] songs from the playlist to the queue."
 		}
