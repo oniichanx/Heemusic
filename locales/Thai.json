@@ -535,11 +535,11 @@
 			"looping_off_by": "Looping Off by {user}"
 		},
 		"setupStart": {
-			"now_playing": "Now Playing",
+			"now_playing": "เขากำลังดูดไข่ผมม..",
 			"description": "[{title}]({uri}) by {author} • `[{length}]` - ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย <@{requester}>",
 			"error_searching": "There was an error while searching.",
 			"no_results": "There were no results found.",
-			"nothing_playing": "Nothing playing right now.",
+			"nothing_playing": "ไม่มีหีในสต็อกให้เย็ดอยู่. >>> [Invite](https://youtu.be/QAna8T9wvxw) | [Support](https://youtu.be/kEEECmshTjA) | [Website](https://twitter.com/parksunhaaa/status/1555420631315128320?s=12&t=PCnuQMcjF0NR1LB5_rX0iQ).",
 			"queue_too_long": "The queue is too long. The maximum length is {maxQueueSize} songs.",
 			"playlist_too_long": "The playlist is too long. The maximum length is {maxPlaylistSize} songs.",
 			"added_to_queue": "Added [{title}]({uri}) to the queue.",
