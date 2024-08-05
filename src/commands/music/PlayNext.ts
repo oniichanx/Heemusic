@@ -151,7 +151,6 @@ export default class PlayNext extends Command {
         }
     }
 
-
     public async autocomplete(interaction) {
         const focusedValue = interaction.options.getFocused();
 
