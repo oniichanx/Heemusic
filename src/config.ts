@@ -16,7 +16,7 @@ export default {
     emoji: {
         // You can add custom emoji with ID format (e.g., <:emojiName:123456789012345678>)
         pause: "<:ac_boom_pause:1200503399158915173>",
-        resume: "<:ae_boom_play_pause:1200503431111135415>",
+        resume: "<:aa_boom_play:1246480210149507225>",
         stop: "<:ad_boom_stop:1200503415101468763>",
         skip: "<:ae_boom_play_pause:1200503431111135415>",
         previous: "<:aa_boom_rewind:1200503448777527506>",
