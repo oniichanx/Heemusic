@@ -1,0 +1,648 @@
+{
+	"cmd": {
+		"247": {
+			"description": "Set the bot to stay in the voice channel",
+			"errors": {
+				"not_in_voice": "You need to be in a voice channel to use this command.",
+				"generic": "An error occurred while trying to execute this command."
+			},
+			"messages": {
+				"disabled": "`✅` | 24/7 mode has been `DISABLED`",
+				"enabled": "`✅` | 24/7 mode has been `ENABLED`. \n**The bot will not leave the voice channel even if there are no people in the voice channel.**"
+			}
+		},
+		"ping": {
+			"description": "Shows the bot's ping.",
+			"content": "Pinging...",
+			"bot_latency": "Bot Latency",
+			"api_latency": "API Latency",
+			"requested_by": "ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย {author}"
+		},
+		"lavalink": {
+			"description": "โชว์สถานะการทำงาน Lavalink.",
+			"title": "สถานะการทำงาน Lavalink",
+			"content": "Player: {players}\nPlaying Players: {playingPlayers}\nUptime: {uptime}\nCores: {cores} Core(s)\nMemory Usage: {used} / {reservable}\nSystem Load: {systemLoad}%\nLavalink Load: {lavalinkLoad}%",
+			"page_info": "Page {index} of {total}"
+		},
+		"invite": {
+			"description": "ขอลิ้งบอทไปนอนเกาหีเล่นในห้อง.",
+			"content": "นายสามารถชวนฉันไปห้องเธอได้โดยคลิกที่ปุ่มด้านล่าง! ถ้าท้องขึ้นมาไม่ใช่ลูกกูน่ะแม่เย็ด!"
+		},
+		"help": {
+			"description": "คำสั่งดูดหี.",
+			"options": {
+				"command": "ตามด้วยคำสั่งทวงท่าของฉันที่นายอยากจะดูได้เลย"
+			},
+			"content": "เฮ้ ไอหนู! ฉันนาย {bot}, ฉันคือบอทที่สร้างมาเพื่อดูดหีดูดควยน่ะ สร้างโดย [heemusic](https://github.com/oniichanx/heemusic) และ Discord. นายสามารถใช้ `{prefix}help <command>` เพื่อดูคำสั่งทวงท่าเพิ่มเติมของฉันได้นะ.",
+			"title": "Help Menu",
+			"not_found": "คำสั่ง `{cmdName}` ไม่มีอยู่จริงน่ะดอกทอง.",
+			"help_cmd": "**Description:** {description}\n**Usage:** {usage}\n**Examples:** {examples}\n**Aliases:** {aliases}\n**Category:** {category}\n**Cooldown:** {cooldown} seconds\n**Permissions:** {premUser}\n**Bot Permissions:** {premBot}\n**Developer Only:** {dev}\n**Slash Command:** {slash}\n**Args:** {args}\n**Player:** {player}\n**DJ:** {dj}\n**DJ Permissions:** {djPerm}\n**Voice:** {voice}",
+			"footer": "ใช้ {prefix}help <command> ใช้สำหรับดูทวงท่าที่ฉันสามารถทำได้น่ะ"
+		},
+		"botinfo": {
+			"description": "Information about the bot",
+			"content": "Bot Information:\n- **Operating System**: {osInfo}\n- **Uptime**: {osUptime}\n- **Hostname**: {osHostname}\n- **CPU Architecture**: {cpuInfo}\n- **CPU Usage**: {cpuUsed}%\n- **Memory Usage**: {memUsed}MB / {memTotal}GB\n- **Node Version**: {nodeVersion}\n- **Discord Version**: {discordJsVersion}\n- **Connected to** {guilds} guilds, {channels} channels, and {users} users\n- **Total Commands**: {commands}"
+		},
+		"about": {
+			"description": "เปิดข้อมูลความลับที่ทำให้หำฉันใหญ่",
+			"fields": {
+				"creator": "Creator",
+				"repository": "Repository",
+				"support": "Support",
+				"description": "ฉันต้องการสร้างโปรเจ็กต์โอเพ่นซอร์สครั้งแรกเพื่อประสบการณ์การเขียนโค้ดที่มากขึ้น ในโปรเจ็กต์นี้ ฉันถูกท้าทายให้สร้างโปรเจ็กต์ที่มีข้อบกพร่องน้อยลง หวังว่าคุณจะสนุกกับการใช้ heemusic!"
+			}
+		},
+		"dj": {
+			"description": "จัดการโหมดดีเจและบทบาทที่เกี่ยวข้อง",
+			"errors": {
+				"provide_role": "กรุณาระบุบทบาท (role).",
+				"no_roles": "ไม่มีบทบาท DJ ที่ตั้งค่าไว้.",
+				"invalid_subcommand": "กรุณาใช้คำสั่งย่อยที่ถูกต้อง."
+			},
+			"messages": {
+				"role_exists": "บทบาท DJ <@&{roleId}> ถูกเพิ่มไว้แล้ว.",
+				"role_added": "บทบาท DJ <@&{roleId}> ได้ถูกเพิ่มเรียบร้อยแล้ว.",
+				"role_not_found": "บทบาท DJ <@&{roleId}> ยังไม่ได้ถูกเพิ่ม.",
+				"role_removed": "บทบาท DJ <@&{roleId}> ได้ถูกลบออกแล้ว.",
+				"all_roles_cleared": "บทบาท DJ ทั้งหมดได้ถูกลบออกแล้ว.",
+				"toggle": "โหมด DJ ได้ถูกเปลี่ยนเป็น {status}."
+			},
+			"options": {
+				"add": "บทบาทดีเจที่คุณต้องการเพิ่ม",
+				"remove": "บทบาทดีเจที่คุณต้องการลบ",
+				"clear": "ล้างบทบาทดีเจทั้งหมด",
+				"toggle": "เปิด/ปิด บทบาทดีเจ",
+				"role": "บทบาทดีเจ"
+			},
+			"subcommands": "คำสั่งย่อย"
+		},
+		"language": {
+			"description": "Set the language for the bot",
+			"invalid_language": "Please provide a valid language. Example: `EnglishUS` for English (United States)\n\nYou can find the list of supported languages [here](https://discord.com/developers/docs/reference#locales)\n\n**Available Languages:**\n{languages}",
+			"already_set": "The language is already set to `{language}`",
+			"not_set": "The language is not set.",
+			"set": "`✅` | The language has been set to `{language}`",
+			"reset": "`✅` | The language has been reset to the default language.",
+			"options": {
+				"set": "Set the language for the bot",
+				"language": "The language you want to set",
+				"reset": "Change the language back to the default language"
+			}
+		},
+		"prefix": {
+			"description": "Shows or sets the bot's prefix",
+			"errors": {
+				"prefix_too_long": "The prefix cannot be longer than 3 characters."
+			},
+			"messages": {
+				"current_prefix": "The prefix for this server is `{prefix}`",
+				"prefix_set": "The prefix for this server is now `{prefix}`",
+				"prefix_reset": "The prefix for this server is now `{prefix}`"
+			},
+			"options": {
+				"set": "Sets the prefix",
+				"prefix": "The prefix you want to set",
+				"reset": "Resets the prefix to the default one"
+			}
+		},
+		"setup": {
+			"description": "ตั้งค่าบอท",
+			"errors": {
+				"channel_exists": "ช่องทางขอต่อคิวเข้าเย็ดในห้อง ได้ถูกสร้างเข้ามาอยู่แล้ว.",
+				"channel_not_exists": "ไม่มีช่องทางขอต่อคิวเย็ดแล้วจร้าไปเปิดห้องใหม่นะจ๊ะ.",
+				"channel_delete_fail": "ช่องทางขอต่อคิวเข้าเย็ดในห้อง ได้ถูกลบล้างแล้ว. ถ้าห้องยังไม่ได้ถูกลบในรูปแบบคำสั่ง, ให้ทำการลบแบบอัตโนมือเองนะ."
+			},
+			"messages": {
+				"channel_created": "ช่องทางขอต่อคิวเข้าเย็ดได้ถูกสร้างขึ้นใน <#{channelId}>.",
+				"channel_deleted": "ช่องทางขอต่อคิวเข้าเย็ดได้ถูกลบออกแล้ว.",
+				"channel_info": "ช่องทางขอต่อคิวเข้าเย็ดในห้อง คือ <#{channelId}>."
+			},
+			"options": {
+				"create": "สร้างช่องทางขอดูดหี",
+				"delete": "ลบช่องทางขอดูดหี",
+				"info": "เปิดช่องทางขอต่อคิวเข้าเย็ดในห้อง"
+			}
+		},
+		"8d": {
+			"description": "on/off 8d filter",
+			"messages": {
+				"filter_enabled": "`✅` | 8D filter has been `ENABLED`.",
+				"filter_disabled": "`✅` | 8D filter has been `DISABLED`."
+			}
+		},
+		"bassboost": {
+			"description": "on/off bassboost filter",
+			"options": {
+				"level": "The bassboost level you want to set"
+			},
+			"messages": {
+				"high": "`✅` | High bassboost filter has been `ENABLED`.",
+				"low": "`✅` | Low bassboost filter has been `ENABLED`.",
+				"medium": "`✅` | Medium bassboost filter has been `ENABLED`.",
+				"off": "`✅` | Bassboost filter has been `DISABLED`."
+			}
+		},
+		"distortion": {
+			"description": "Toggle the distortion filter on/off",
+			"messages": {
+				"filter_enabled": "`✅` | Distortion filter has been `ENABLED`.",
+				"filter_disabled": "`✅` | Distortion filter has been `DISABLED`."
+			}
+		},
+		"karaoke": {
+			"description": "Toggle the karaoke filter on/off",
+			"messages": {
+				"filter_enabled": "`✅` | Karaoke filter has been `ENABLED`.",
+				"filter_disabled": "`✅` | Karaoke filter has been `DISABLED`."
+			}
+		},
+		"lowpass": {
+			"description": "Toggle the lowpass filter on/off",
+			"messages": {
+				"filter_enabled": "`✅` | Lowpass filter has been `ENABLED`.",
+				"filter_disabled": "`✅` | Lowpass filter has been `DISABLED`."
+			}
+		},
+		"nightcore": {
+			"description": "Toggle the nightcore filter on/off",
+			"messages": {
+				"filter_enabled": "`✅` | Nightcore filter has been `ENABLED`.",
+				"filter_disabled": "`✅` | Nightcore filter has been `DISABLED`."
+			}
+		},
+		"pitch": {
+			"description": "Toggle the pitch filter on/off",
+			"options": {
+				"pitch": "The number you want to set the pitch to (between 0.5 and 5)"
+			},
+			"errors": {
+				"invalid_number": "Please provide a valid number between 0.5 and 5."
+			},
+			"messages": {
+				"pitch_set": "`✅` | Pitch has been set to **{pitch}**."
+			}
+		},
+		"rate": {
+			"description": "Change the rate of the song",
+			"options": {
+				"rate": "The number you want to set the rate to (between 0.5 and 5)"
+			},
+			"errors": {
+				"invalid_number": "Please provide a valid number between 0.5 and 5."
+			},
+			"messages": {
+				"rate_set": "`✅` | Rate has been set to **{rate}**."
+			}
+		},
+		"reset": {
+			"description": "Resets the active filters",
+			"messages": {
+				"filters_reset": "`✅` | Filters have been reset."
+			}
+		},
+		"rotation": {
+			"description": "Toggle the rotation filter on/off",
+			"messages": {
+				"enabled": "`✅` | Rotation filter has been `ENABLED`.",
+				"disabled": "`✅` | Rotation filter has been `DISABLED`."
+			}
+		},
+		"speed": {
+			"description": "Change the speed of the song",
+			"options": {
+				"speed": "The speed you want to set"
+			},
+			"messages": {
+				"invalid_number": "Please provide a valid number between 0.5 and 5.",
+				"set_speed": "`✅` | Speed has been set to **{speed}**."
+			}
+		},
+		"tremolo": {
+			"description": "Toggle the tremolo filter on/off",
+			"messages": {
+				"enabled": "`✅` | Tremolo filter has been `ENABLED`.",
+				"disabled": "`✅` | Tremolo filter has been `DISABLED`."
+			}
+		},
+		"vibrato": {
+			"description": "Toggle the vibrato filter on/off",
+			"messages": {
+				"enabled": "`✅` | Vibrato filter has been `ENABLED`.",
+				"disabled": "`✅` | Vibrato filter has been `DISABLED`."
+			}
+		},
+		"autoplay": {
+			"description": "Toggles autoplay",
+			"messages": {
+				"enabled": "`✅` | Autoplay has been `ENABLED`.",
+				"disabled": "`✅` | Autoplay has been `DISABLED`."
+			}
+		},
+		"clearqueue": {
+			"description": "Clears the queue",
+			"messages": {
+				"cleared": "The queue has been cleared."
+			}
+		},
+		"grab": {
+			"description": "Grabs the current playing song on your DM",
+			"loading": "Loading...",
+			"content": "**Duration:** {length}\n**ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย:** <@{requester}>\n**Link:** [Click here]({uri})",
+			"check_dm": "Please check your DM.",
+			"dm_failed": "I couldn't send you a DM. Please make sure allow direct messages is turned on."
+		},
+		"join": {
+			"description": "เข้าร่วมช่องพูดคุยเสียง",
+			"already_connected": "I'm already connected to <#{channelId}>.",
+			"no_voice_channel": "You need to be in a voice channel to use this command.",
+			"joined": "Successfully joined <#{channelId}>."
+		},
+		"leave": {
+			"description": "ออกจากช่องพูดคุยเสียง",
+			"left": "Successfully left <#{channelId}>.",
+			"not_in_channel": "I'm not in a voice channel."
+		},
+		"loop": {
+			"description": "วนซ้ำเพลงปัจจุบันหรือคิวเย็ด",
+			"looping_song": "**Looping the song.**",
+			"looping_queue": "**Looping the queue.**",
+			"looping_off": "**Looping is now off.**"
+		},
+		"lyrics": {
+			"description": "Get's the lyrics of the currently playing track",
+			"lyrics_track": "### Lyrics for: [{trackTitle}]({trackUrl})\n**`{lyrics}`**",
+			"searching": "`🔍` Searching for **{trackTitle}** lyrics...",
+			"errors": {
+				"no_results": "No lyrics found for the current track.",
+				"lyrics_error": "An error occurred while getting the lyrics."
+			}
+		},
+		"nowplaying": {
+			"description": "แสดงเพลงที่กำลังเล่นอยู่",
+			"now_playing": "เขากำลังดูดไข่ผมม..",
+			"track_info": "[{title}]({uri}) - ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย: <@{requester}>\n\n`{bar}`"
+		},
+		"pause": {
+			"description": "หยุดเพลงปัจจุบันชั่วคราว",
+			"successfully_paused": "Successfully paused the song."
+		},
+		"play": {
+			"description": "เล่นเพลงจาก YouTube, Spotify หรือ http",
+			"options": {
+				"song": "เพลงที่คุณต้องการเล่น"
+			},
+			"loading": "Loading...",
+			"errors": {
+				"search_error": "เกิดข้อผิดพลาดระหว่างการค้นหาหีเลีย.",
+				"no_results": "ไม่พบรูหีให้เด้า.",
+				"queue_too_long": "กระเจี้ยวผมยาวสูงสุดคือ {maxQueueSize} นิ้วนะคุณ.",
+				"playlist_too_long": "ผู้หญิงเพลย์ลิสต์ยาวเกินไป ความยาวสูงสุดคือ {maxPlaylistSize} คน."
+			},
+			"added_to_queue": "Added [{title}]({uri}) to the queue.",
+			"added_playlist_to_queue": "Added {length} songs to the queue."
+		},
+		"playnext": {
+			"description": "Add the song to play next in queue",
+			"options": {
+				"song": "The song you want to play"
+			},
+			"loading": "Loading...",
+			"errors": {
+				"search_error": "เกิดข้อผิดพลาดระหว่างการค้นหาหีเลีย.",
+				"no_results": "ไม่พบรูหีให้เด้า.",
+				"queue_too_long": "กระเจี้ยวผมยาวสูงสุดคือ {maxQueueSize} นิ้วนะคุณ.",
+				"playlist_too_long": "ผู้หญิงเพลย์ลิสต์ยาวเกินไป ความยาวสูงสุดคือ {maxPlaylistSize} คน."
+			},
+			"added_to_play_next": "Added [{title}]({uri}) to play next in the queue.",
+			"added_playlist_to_play_next": "Added {length} songs to play next in the queue."
+		},
+		"queue": {
+			"description": "แสดงคิวเย็ดปัจจุบัน",
+			"now_playing": "เขากำลังดูดไข่ผมม..: [{title}]({uri}) - ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย: <@{requester}> - Duration: `{duration}`",
+			"live": "LIVE",
+			"track_info": "{index}. [{title}]({uri}) - ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย: <@{requester}> - Duration: `{duration}`",
+			"title": "Queue",
+			"page_info": "Page {index} of {total}"
+		},
+		"remove": {
+			"description": "ลบเพลงออกจากคิวเย็ด",
+			"options": {
+				"song": "The song number you want to remove"
+			},
+			"errors": {
+				"no_songs": "There are no songs in the queue.",
+				"invalid_number": "Please provide a valid song number."
+			},
+			"messages": {
+				"removed": "Removed song number {songNumber} from the queue."
+			}
+		},
+		"replay": {
+			"description": "เล่นเพลงปัจจุบันอีกครั้ง",
+			"errors": {
+				"not_seekable": "Cannot replay this track as it is not seekable."
+			},
+			"messages": {
+				"replaying": "Replaying the current track."
+			}
+		},
+		"resume": {
+			"description": "เล่นต่อเพลงปัจจุบัน",
+			"errors": {
+				"not_paused": "The player is not paused."
+			},
+			"messages": {
+				"resumed": "Resumed the player."
+			}
+		},
+		"search": {
+			"description": "ค้นหาเพลง",
+			"options": {
+				"song": "เพลงที่คุณต้องการค้นหา"
+			},
+			"select": "โปรดเลือกเพลงที่คุณต้องการจะเล่นเพลง",
+			"errors": {
+				"no_results": "ไม่พบรูหีให้เด้า.",
+				"search_error": "There was an error while searching."
+			},
+			"messages": {
+				"added_to_queue": "Added [{title}]({uri}) to the queue."
+			}
+		},
+		"seek": {
+			"description": "ข้ามไปยังเวลาที่กำหนดในเพลง",
+			"options": {
+				"duration": "The duration to seek to"
+			},
+			"errors": {
+				"invalid_format": "Invalid time format. Examples: seek 1m, seek 1h 30m",
+				"not_seekable": "This track is not seekable.",
+				"beyond_duration": "Cannot seek beyond the song duration of {length}."
+			},
+			"messages": {
+				"seeked_to": "Seeked to {duration}"
+			}
+		},
+		"shuffle": {
+			"description": "สลับคิว",
+			"messages": {
+				"shuffled": "Shuffled the queue."
+			}
+		},
+		"skip": {
+			"description": "ข้ามเพลงปัจจุบัน",
+			"messages": {
+				"skipped": "Skipped [{title}]({uri})."
+			}
+		},
+		"skipto": {
+			"description": "ข้ามไปยังเพลงเฉพาะในคิว",
+			"options": {
+				"number": "The number of the song you want to skip to"
+			},
+			"errors": {
+				"invalid_number": "Please provide a valid number."
+			},
+			"messages": {
+				"skipped_to": "Skipped to song number {number}."
+			}
+		},
+		"stop": {
+			"description": "หยุดเพลงและล้างคิว",
+			"messages": {
+				"stopped": "หยุดเพลงและล้างคิว."
+			}
+		},
+		"volume": {
+			"description": "ตั้งค่าระดับแรงดันควย",
+			"options": {
+				"number": "The volume you want to set"
+			},
+			"messages": {
+				"invalid_number": "Please provide a valid number.",
+				"too_low": "The volume can't be lower than 0.",
+				"too_high": "The volume can't be higher than 200. Do you want to damage your hearing or speakers? Hmmm, I don't think that's such a good idea.",
+				"set": "Set the volume to {volume}"
+			}
+		},
+		"addsong": {
+			"description": "เพิ่มเพลงในเพลย์ลิสต์",
+			"options": {
+				"playlist": "เพลย์ลิสต์ที่คุณต้องการเพิ่ม",
+				"song": "เพลงที่คุณต้องการเพิ่ม"
+			},
+			"messages": {
+				"no_playlist": "Please provide a playlist",
+				"no_song": "Please provide a song",
+				"playlist_not_found": "That playlist doesn't exist",
+				"no_songs_found": "No songs found",
+				"added": "Added {count} song(s) to {playlist}"
+			}
+		},
+		"create": {
+			"description": "สร้างเพลย์ลิสต์",
+			"options": {
+				"name": "ชื่อของเพลย์ลิสต์"
+			},
+			"messages": {
+				"name_too_long": "Playlist names can only be 50 characters long.",
+				"playlist_exists": "A playlist with that name already exists. Please use a different name.",
+				"playlist_created": "Playlist **{name}** has been created."
+			}
+		},
+		"delete": {
+			"description": "ลบเพลย์ลิสต์",
+			"options": {
+				"playlist": "เพลย์ลิสต์ที่คุณต้องการลบ"
+			},
+			"messages": {
+				"playlist_not_found": "That playlist doesn't exist.",
+				"playlist_deleted": "Deleted playlist **{playlistName}**."
+			}
+		},
+		"list": {
+			"description": "ดึงเพลย์ลิสต์ทั้งหมดสำหรับผู้ใช้",
+			"options": {
+				"user": "ผู้ใช้ที่คุณต้องการดึงเพลย์ลิสต์"
+			},
+			"messages": {
+				"no_playlists": "This user has no playlists.",
+				"your": "Your",
+				"playlists_title": "{username}'s Playlists",
+				"error": "An error occurred while retrieving the playlists."
+			}
+		},
+		"load": {
+			"description": "โหลดเพลย์ลิสต์",
+			"options": {
+				"playlist": "เพลย์ลิสต์ที่คุณต้องการโหลด"
+			},
+			"messages": {
+				"playlist_not_exist": "That playlist doesn't exist.",
+				"playlist_empty": "That playlist is empty.",
+				"playlist_loaded": "Loaded `{name}` with `{count}` songs."
+			}
+		},
+		"removesong": {
+			"description": "ลบเพลงออกจากเพลย์ลิสต์",
+			"options": {
+				"playlist": "เพลย์ลิสต์ที่คุณต้องการลบออก",
+				"song": "เพลงที่คุณต้องการลบ"
+			},
+			"messages": {
+				"provide_playlist": "Please provide a playlist.",
+				"provide_song": "Please provide a song.",
+				"playlist_not_exist": "That playlist doesn't exist.",
+				"song_not_found": "No matching song found.",
+				"song_removed": "Removed {song} from {playlist}.",
+				"error_occurred": "An error occurred while removing the song."
+			}
+		},
+		"steal": {
+			"description": "ขโมยเพลย์ลิสต์จากผู้ใช้อื่นและเพิ่มในเพลย์ลิสต์ของคุณ",
+			"options": {
+				"playlist": "เพลย์ลิสต์ที่คุณต้องการขโมย",
+				"user": "ผู้ใช้ที่คุณต้องการขโมยเพลย์ลิสต์"
+			},
+			"messages": {
+				"provide_playlist": "Please provide a playlist name.",
+				"provide_user": "Please mention a user.",
+				"playlist_not_exist": "That playlist doesn't exist for the mentioned user.",
+				"playlist_stolen": "Successfully stole the playlist `{playlist}` from {user}.",
+				"error_occurred": "An error occurred while stealing the playlist."
+			}
+		}
+	},
+	"buttons": {
+		"invite": "Invite",
+		"support": "Support Server",
+		"previous": "Previous",
+		"resume": "Resume",
+		"stop": "Stop",
+		"skip": "Skip",
+		"loop": "Loop",
+		"errors": {
+			"not_author": "You can't use this button."
+		}
+	},
+	"player": {
+		"errors": {
+			"no_player": "There is no active player in this guild.",
+			"no_channel": "You need to be in a voice channel to use this command.",
+			"queue_empty": "The queue is empty.",
+			"no_previous": "There are no previous songs in the queue.",
+			"no_song": "There are no songs in the queue.",
+			"already_paused": "The song is already paused."
+		},
+		"trackStart": {
+			"now_playing": "เขากำลังดูดไข่ผมม..",
+			"requested_by": "ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย {user}",
+			"duration": "Duration",
+			"author": "Author",
+			"not_connected_to_voice_channel": "You are not connected to <#{channel}> to use these buttons.",
+			"need_dj_role": "You need to have the DJ role to use this command.",
+			"previous_by": "Previous by {user}",
+			"no_previous_song": "There is no previous song.",
+			"paused_by": "Paused by {user}",
+			"resumed_by": "Resumed by {user}",
+			"skipped_by": "Skipped by {user}",
+			"no_more_songs_in_queue": "There is no more song in the queue.",
+			"looping_by": "Looping by {user}",
+			"looping_queue_by": "Looping Queue by {user}",
+			"looping_off_by": "Looping Off by {user}"
+		},
+		"setupStart": {
+			"now_playing": "เขากำลังดูดไข่ผมม..",
+			"description": "[{title}]({uri}) by {author} • `[{length}]` - ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย <@{requester}>",
+			"error_searching": "เกิดข้อผิดพลาดระหว่างการค้นหาหีเลีย.",
+			"no_results": "ไม่พบรูหีให้เด้า.",
+			"nothing_playing": "ไม่มีหีในสต็อกให้เย็ดอยู่. >>> [Invite](https://youtu.be/QAna8T9wvxw) | [Support](https://youtu.be/kEEECmshTjA) | [Website](https://twitter.com/parksunhaaa/status/1555420631315128320?s=12&t=PCnuQMcjF0NR1LB5_rX0iQ).",
+			"queue_too_long": "กระเจี้ยวผมยาวสูงสุดคือ {maxQueueSize} นิ้วนะคุณ.",
+			"playlist_too_long": "ผู้หญิงเพลย์ลิสต์ยาวเกินไป ความยาวสูงสุดคือ {maxPlaylistSize} คน.",
+			"added_to_queue": "Added [{title}]({uri}) to the queue.",
+			"added_playlist_to_queue": "Added [{length}] songs from the playlist to the queue."
+		}
+	},
+	"event": {
+		"interaction": {
+			"setup_channel": "You can't use this command in the setup channel.",
+			"no_send_message": "I don't have **`SendMessage`** permission in `{guild}`\nchannel: {channel}.",
+			"no_permission": "I don't have enough permissions to execute this command.",
+			"no_user_permission": "You don't have enough permissions to use this command.",
+			"no_voice_channel": "You must be connected to a voice channel to use this `{command}` command.",
+			"no_connect_permission": "I don't have `CONNECT` permissions to execute this `{command}` command.",
+			"no_speak_permission": "I don't have `SPEAK` permissions to execute this `{command}` command.",
+			"no_request_to_speak": "I don't have `REQUEST TO SPEAK` permission to execute this `{command}` command.",
+			"different_voice_channel": "You are not connected to {channel} to use this `{command}` command.",
+			"no_music_playing": "คือมันไม่มีเพลงค้าาอีสัสนรกนี่จะสั่งกูทำไมนักหนา.",
+			"no_dj_role": "DJ role is not set.",
+			"no_dj_permission": "You need to have the DJ role to use this command.",
+			"cooldown": "Please wait {time} more second(s) before reusing the `{command}` command.",
+			"error": "An error occurred: `{error}`",
+			"vote_button": "Vote for me",
+			"vote_message": "Wait! You need to vote on top.gg to use this command. Thanks."
+		},
+		"message": {
+			"prefix_mention": "Hey, my prefix for this server is `{prefix}`. Want more info? then do `{prefix}help`\nStay Safe, Stay Awesome!",
+			"no_send_message": "I don't have **`SendMessage`** permission in `{guild}`\nchannel: {channel}.",
+			"no_permission": "I don't have enough permissions to execute this command.",
+			"no_user_permission": "You don't have enough permissions to use this command.",
+			"no_voice_channel": "You must be connected to a voice channel to use this `{command}` command.",
+			"no_connect_permission": "I don't have `CONNECT` permissions to execute this `{command}` command.",
+			"no_speak_permission": "I don't have `SPEAK` permissions to execute this `{command}` command.",
+			"no_request_to_speak": "I don't have `REQUEST TO SPEAK` permission to execute this `{command}` command.",
+			"different_voice_channel": "You are not connected to {channel} to use this `{command}` command.",
+			"no_music_playing": "คือมันไม่มีเพลงค้าาอีสัสนรกนี่จะสั่งกูทำไมนักหนา.",
+			"no_dj_role": "DJ role is not set.",
+			"no_dj_permission": "You need to have the DJ role to use this command.",
+			"missing_arguments": "Missing Arguments",
+			"missing_arguments_description": "Please provide the required arguments for the `{command}` command.\n\nExamples:\n{examples}",
+			"syntax_footer": "Syntax: [] = optional, <> = required",
+			"cooldown": "Please wait {time} more second(s) before reusing the `{command}` command.",
+			"no_mention_everyone": "You can't use this command with everyone or here. Please use slash command.",
+			"error": "An error occurred: `{error}`",
+			"no_voice_channel_queue": "กราบเรียนคุณมึงเชิญเข้าห้องมาก่อนจะใส่คิวเย็ดนะดอกทอง.",
+			"no_permission_connect_speak": "I don't have enough permission to connect/speak in <#{channel}>.",
+			"different_voice_channel_queue": "You are not connected to <#{channel}> to queue songs.",
+			"vote_button": "Vote for me!",
+			"vote_message": "Wait! You need to vote on top.gg to use this command. Thanks."
+		},
+		"setupButton": {
+			"no_voice_channel_button": "กราบเรียนคุณมึงเชิญเข้าห้องมาก่อนจะใช้ปุ่มน่ะอีสัส.",
+			"different_voice_channel_button": "กราบเรียนคุณมึงเชิญเข้าห้อง {channel} มาก่อนจะใช้ปุ่มน่ะอีสัส.",
+			"now_playing": "เขากำลังดูดไข่ผมม..",
+			"live": "LIVE",
+			"requested_by": "ชายผู้สั่งให้ผมเริ่มดูดไข่ โดยนาย <@{requester}>",
+			"no_dj_permission": "มึงต้องมึยศ DJ ก่อนจะใช้ปุ่มเสี่ยวนะควย.",
+			"volume_set": "เพิ่มลดแรงดันควยเป็น {vol}%",
+			"volume_footer": "แรงดันควย: {vol}%",
+			"paused": "หยุดเด้า",
+			"resumed": "เด้าซ้ำ",
+			"pause_resume": "{name} ผู้หญิงใน list.",
+			"pause_resume_footer": "{name} โดยนาย {displayName}",
+			"no_music_to_skip": "ไม่มีหีในคิวให้ข้ามไปเย็ด.",
+			"skipped": "ข้ามหาแม่มึงแงะ.",
+			"skipped_footer": "ข้ามโดย {displayName}",
+			"stopped": "หยุดเด้าหาเหิ้ยไรกำลังมันส์.",
+			"stopped_footer": "หยุดโดย {displayName}",
+			"nothing_playing": "ไม่มีหีในสต็อกให้เย็ดอยู่. >>> [Invite](https://youtu.be/QAna8T9wvxw) | [Support](https://youtu.be/kEEECmshTjA) | [Website](https://twitter.com/parksunhaaa/status/1555420631315128320?s=12&t=PCnuQMcjF0NR1LB5_rX0iQ).",
+			"loop_set": "ตั้งค่าเล่นวนรอบเป็น {loop}.",
+			"loop_footer": "ตั้งค่าเล่นวนรอบเป็น {loop} โดยนาย {displayName}",
+			"shuffled": "สุ่มผู้หญิงเย็ดในคิว.",
+			"no_previous_track": "ไม่ได้เย็ดผู้หญิงก่อนหน้านี้.",
+			"playing_previous": "กำลังกลับไปซ้ำหีเดิมก่อนหน้า.",
+			"previous_footer": "กำลังกลับไปซ้ำหีเดิมก่อนหน้า โดยนาย {displayName}",
+			"rewinded": "ถอกควยจนสุดล่ะไอเหิ้ยจะเอาสุดไปถึงไหน.",
+			"rewind_footer": "กำลังถอกหัวควยลง โดยนาย {displayName}",
+			"forward_limit": "ดึงหนังควยไปจะขาดอยู่แล้วมันไม่ต่อไปไม่ได้ล่ะไอสัส.",
+			"forwarded": "ดึงหนังควยไปจะขาดอยู่แล้วไอสัสจะเอาเร่งไปถึงไหน.",
+			"forward_footer": "กำลังดึงหนังควยขึ้นเล็กน้อย โดยนาย {displayName}",
+			"button_not_available": "This button is not available.",
+			"no_music_playing": "คือมันไม่มีเพลงค้าาอีสัสนรกนี่จะสั่งกูทำไมนักหนา."
+		}
+	},
+	"Evaluate code": "Evaluate code",
+	"Leave a guild": "Leave a guild",
+	"List all guilds the bot is in": "List all guilds the bot is in",
+	"Restart the bot": "Restart the bot"
+}
